@@ -1,0 +1,85 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-title>Configuración</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal">
+    <p>Ingresa la información solicitada:</p>
+    <form [formGroup]="formConfig" novalidate>
+        <ion-card>
+            <ion-list lines="full" class="ion-no-margin ion-no-padding">
+                <ion-item>
+                    <ion-label position="stacked">Mi ID Tag
+                        <ion-text color="danger">*</ion-text>
+                    </ion-label>
+                    <ion-input formControlName="playerTag" required type="text" placeholder="Ingresa tu ID Tag de CR sin #" oninput="this.value = this.value.toUpperCase()"></ion-input>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <ion-button expand="full" (click)="validar()">
+            <ion-icon slot="start" name="search-outline"></ion-icon>
+            Validar</ion-button>
+    </form>
+
+    <section *ngIf="mostrarResultados">
+
+        <h3>Resultados:</h3>
+        <ion-card *ngIf="resultados.playerTagValid">
+            <ion-item lines="none">
+                <ion-label>Información del jugador:</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-avatar slot="start">
+                    <img [src]="resultados.playerInfo.currentFavouriteCard.iconUrls.medium">
+                </ion-avatar>
+                <ion-label>
+                    <h2><strong>{{resultados.playerInfo.name}}</strong></h2>
+                    <p>{{resultados.playerInfo.clan.name}}</p>
+                </ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/cr-trophies.png">
+                </ion-thumbnail>
+                <ion-label>
+                    <h3>Copas</h3>
+                    <ion-badge>{{resultados.playerInfo.trophies}}</ion-badge>
+                </ion-label>
+            </ion-item>
+        </ion-card>
+        <ion-chip color="warning" *ngIf="!resultados.playerTagValid">El tag de jugador ingresado no existe.</ion-chip>
+        <ion-card *ngIf="resultados.clanTagValid">
+            <ion-item lines="none">
+                <ion-label>Información del Clan:</ion-label>
+            </ion-item>
+            <ion-item>
+                <ion-label>
+                    <h2><strong>{{resultados.clanInfo.name}}</strong></h2>
+                    <h3>{{resultados.clanInfo.description}}</h3>
+                    <p>{{resultados.clanInfo.tag}}</p>
+                </ion-label>
+                <ion-badge slot="end">{{resultados.clanInfo.members}}/50</ion-badge>
+            </ion-item>
+            <ion-item>
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/cr-trophies.png">
+                </ion-thumbnail>
+                <ion-label>
+                    <h3>Copas del Clan</h3>
+                    <ion-badge>{{resultados.clanInfo.clanScore}}</ion-badge>
+                </ion-label>
+            </ion-item>
+        </ion-card>
+        <ion-chip color="warning" *ngIf="!resultados.clanTagValid">No existe información de clan asociada al jugador.</ion-chip>
+    </section>
+</ion-content>
+<ion-footer class="ion-no-border">
+    <ion-button expand="full" color="success" name="guardar" (click)="guardarData()">
+        <ion-icon slot="start" name="save-outline"></ion-icon>
+        Guardar
+    </ion-button>
+</ion-footer>

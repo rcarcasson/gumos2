@@ -1,0 +1,23 @@
+.item-icon {
+    height: 100px;
+    .icon {
+        width: 100%;
+        text-align: center !important;
+        color: #5BC500;
+        font-size: 50px;
+    }
+}
+
+.item-name {
+    display: inline-block;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    color: white;
+    font-size: 1.0rem;
+    font-weight: bold;
+    padding: 4px;
+    background-color: #5BC500;
+    bottom: 0px !important;
+    margin-bottom: 0px;
+}

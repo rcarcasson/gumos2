@@ -1,0 +1,98 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button (click)="actualizar()">
+                <ion-icon name="refresh"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>{{titulo}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-card>
+        <ion-item color="light" lines="full">
+            <ion-label>Status</ion-label>
+        </ion-item>
+        <ion-list>
+            <ion-item>
+                <ion-label>Tag</ion-label>
+                <ion-badge slot="end" color="light">{{infoPlayer.tag}}</ion-badge>
+            </ion-item>
+            <ion-item>
+                <ion-label>Nivel de Exp</ion-label>
+                <ion-badge slot="end" color="warning">{{infoPlayer.expLevel}}</ion-badge>
+            </ion-item>
+            <ion-item>
+                <ion-label>Coronas</ion-label>
+                <ion-badge slot="end">{{infoPlayer.trophies}}</ion-badge>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label>Puntos Estelares</ion-label>
+                <ion-badge slot="end" color="warning">{{infoPlayer.starPoints}}</ion-badge>
+            </ion-item>
+        </ion-list>
+    </ion-card>
+    <ion-card>
+        <ion-item color="light" lines="full">
+            <ion-label>Mazo</ion-label>
+        </ion-item>
+        <ion-grid class="ion-text-center">
+            <ion-row>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[0].iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[1].iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[2].iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[3].iconUrls.medium"></ion-img>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[4].iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[5].iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[6].iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="3">
+                    <ion-img [src]="infoPlayer.currentDeck[7].iconUrls.medium"></ion-img>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+        <ion-item color="light" lines="full">
+            <ion-label>Carta favorita actual</ion-label>
+        </ion-item>
+        <ion-grid class="ion-text-center">
+            <ion-row>
+                <ion-col size="4">
+
+                </ion-col>
+                <ion-col size="4">
+                    <ion-img [src]="infoPlayer.currentFavouriteCard.iconUrls.medium"></ion-img>
+                </ion-col>
+                <ion-col size="4">
+
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-card>
+    <ion-card>
+        <ion-item color="light" lines="full">
+            <ion-label>Mis Batallas</ion-label>
+        </ion-item>
+        <ion-card-content>
+            <canvas #battlesChart></canvas>
+        </ion-card-content>
+    </ion-card>
+</ion-content>

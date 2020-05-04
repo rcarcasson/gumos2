@@ -45,4 +45,13 @@ export class ClashService {
     return this.http.get(finalProxyUrl)
       .pipe(catchError(this.cbFailure));
   }
+
+  public getIncomingChests(tag: string): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'PLAYER.GET_INCOMING_CHESTS', '');
+    this.endpoint = _.replace(this.endpoint, '{playerTag}', tag);
+    const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
+
+    return this.http.get(finalProxyUrl)
+      .pipe(catchError(this.cbFailure));
+  }
 }

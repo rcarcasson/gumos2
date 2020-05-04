@@ -5,8 +5,9 @@ import { Convert, PlayerInfo } from 'src/app/models/player.model';
 import { CONST } from 'src/app/constants/general.const';
 import { Chart } from 'chart.js';
 import { AlertasService } from 'src/app/shared/alertas.service';
-import { Observable } from 'rxjs';
 import { ClashProvider } from 'src/app/providers/clashservice.provider';
+import { ConvertChest, ChestInfo } from 'src/app/models/inc-chest.model';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-miperfil',
@@ -17,21 +18,29 @@ export class MiperfilPage implements OnInit {
   @ViewChild('battlesChart', {static: true}) battlesChart;
 
   public infoPlayer: PlayerInfo;
+  public chestInfo: ChestInfo;
   public titulo = 'Mi Perfil';
   private tagPlayer = '';
   constructor(
     private storageService: StorageService,
     private alertaService: AlertasService,
-    private clashProvider: ClashProvider
+    private clashProvider: ClashProvider,
+    private navController: NavController
   ) { }
 
   ngOnInit() {
 
-    this.infoPlayer = Convert.toPlayerInfo(this.storageService.getDataPlayer(_.get(CONST, 'GENERAL.PLAYER_KEY')));
+    this.infoPlayer = Convert.toPlayerInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.PLAYER_KEY')));
+    this.chestInfo = ConvertChest.toChestInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CHEST_KEY')));
     console.log(this.infoPlayer);
-    if (this.infoPlayer) {
+    console.log(this.chestInfo);
+    if (this.infoPlayer !== null) {
       this.titulo = this.infoPlayer.name;
       this.tagPlayer = _.replace(this.infoPlayer.tag, '#', '');
+    } else {
+      // tslint:disable-next-line: max-line-length
+      const mensaje = 'No hay información para desplegar de tu perfil. Ve a Configuración en el menú superior izquierdo para establecer tu tag.'
+      this.navController.navigateRoot('error', {queryParams: { mensaje }, animated: true});
     }
   }
 
@@ -66,6 +75,7 @@ export class MiperfilPage implements OnInit {
     const cbOk = response => {
       this.infoPlayer = response;
       const playerInfo = Convert.toPlayerInfo(JSON.stringify(this.infoPlayer));
+      // const incomingChest = ConvertChest.toChestInfo(JSON.stringify(this.infoPlayer.))
       this.storageService.setData(_.get(CONST, 'GENERAL.PLAYER_KEY'), playerInfo);
       this.alertaService.hideLoading();
     };

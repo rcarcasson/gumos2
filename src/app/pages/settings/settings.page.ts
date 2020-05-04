@@ -4,6 +4,7 @@ import { ClashProvider } from '../../providers/clashservice.provider';
 import { AlertasService } from 'src/app/shared/alertas.service';
 import { StorageService } from 'src/app/shared/storage.service';
 import { Convert } from 'src/app/models/player.model';
+import { ConvertChest } from 'src/app/models/inc-chest.model';
 import { CONST } from '../../constants/general.const';
 import _ from 'lodash';
 
@@ -90,8 +91,10 @@ export class SettingsPage implements OnInit {
     }
 
     const playerInfo = Convert.toPlayerInfo(JSON.stringify(this.resultados.playerInfo));
+    const chestPlayerInfo = ConvertChest.toChestInfo(JSON.stringify(this.resultados.incomingChests));
     this.storageService.setData(_.get(CONST, 'GENERAL.SETTINGS_KEY'), this.playerTag.value);
     this.storageService.setData(_.get(CONST, 'GENERAL.PLAYER_KEY'), playerInfo);
+    this.storageService.setData(_.get(CONST, 'GENERAL.CHEST_KEY'), chestPlayerInfo);
     this.alertaService.mostrarToast('Información guardada');
   }
 

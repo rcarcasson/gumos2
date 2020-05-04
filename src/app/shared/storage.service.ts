@@ -15,7 +15,7 @@ export class StorageService {
     return JSON.parse(localStorage.getItem(key));
   }
 
-  public getDataPlayer(key: string) {
+  public getDataSinParse(key: string) {
     return localStorage.getItem(key);
   }
 }

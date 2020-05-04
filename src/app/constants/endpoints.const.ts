@@ -7,7 +7,8 @@ export const ENDPOINTS = {
         GET_CLAN_CURRENT_WAR: 'https://proxy.royaleapi.dev/v1/clans/{clanTag}/currentwar'
     },
     PLAYER: {
-        GET_PLAYER_INFO: 'https://proxy.royaleapi.dev/v1/players/%23{playerTag}'
+        GET_PLAYER_INFO: 'https://proxy.royaleapi.dev/v1/players/%23{playerTag}',
+        GET_INCOMING_CHESTS: 'https://proxy.royaleapi.dev/v1/players/%23{playerTag}/upcomingchests'
     },
     PROXY: {
         GET_PROXY_URL: 'http://localhost/proxycr/proxy.php?url={url}'

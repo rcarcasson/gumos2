@@ -21,7 +21,8 @@ export class ClashProvider {
             playerTagValid: true,
             playerInfo: {},
             clanTagValid: true,
-            clanInfo: {}
+            clanInfo: {},
+            incomingChests: {}
         };
         let clanTag = '';
 
@@ -43,6 +44,14 @@ export class ClashProvider {
             } else {
                 resultMessage.clanInfo = response;
             }
+            return this.getIncomingChests(playerTag);
+        };
+
+        const cbIncomingChests = response => {
+            if (_.get(response, 'reason') !== 'notFound') {
+                resultMessage.incomingChests = response;
+            }
+
             return resultMessage;
         }
 
@@ -52,7 +61,8 @@ export class ClashProvider {
 
         return this.clashService.getInfoJugador(playerTag)
             .pipe(mergeMap(cbPlayerTag))
-            .pipe(map(cbClanTag))
+            .pipe(mergeMap(cbClanTag))
+            .pipe(map(cbIncomingChests))
             .pipe(catchError(cbError));
     }
 
@@ -82,6 +92,20 @@ export class ClashProvider {
         };
 
         return this.clashService.getInfoJugador(playerTag)
+            .pipe(map(cbOk))
+            .pipe(catchError(cbError));
+    }
+
+    public getIncomingChests(playerTag: string): Observable<any> {
+        const cbOk = response => {
+            return response;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.getIncomingChests(playerTag)
             .pipe(map(cbOk))
             .pipe(catchError(cbError));
     }

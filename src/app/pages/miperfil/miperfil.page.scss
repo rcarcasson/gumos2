@@ -3,3 +3,21 @@
     align-items: center;
     justify-content: center;
 }
+
+#notification-button {
+    overflow: visible!important;
+}
+
+#levelinfo-badge-end {
+    position: absolute;
+    top: -3px;
+    right: -3px;
+    border-radius: 100%;
+}
+
+#startlevel-badge-start {
+    position: absolute;
+    top: -3px;
+    left: 3px;
+    border-radius: 100%;
+}

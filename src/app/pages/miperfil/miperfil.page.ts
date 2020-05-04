@@ -39,7 +39,7 @@ export class MiperfilPage implements OnInit {
       this.tagPlayer = _.replace(this.infoPlayer.tag, '#', '');
     } else {
       // tslint:disable-next-line: max-line-length
-      const mensaje = 'No hay información para desplegar de tu perfil. Ve a Configuración en el menú superior izquierdo para establecer tu tag.'
+      const mensaje = 'No hay información para desplegar de tu perfil. Ve a Configuración en el menú superior izquierdo para establecer tu tag.';
       this.navController.navigateRoot('error', {queryParams: { mensaje }, animated: true});
     }
   }

@@ -8,6 +8,7 @@ import { MiperfilPageRoutingModule } from './miperfil-routing.module';
 
 import { MiperfilPage } from './miperfil.page';
 import { ModlevelPipe } from '../../pipes/modlevel.pipe';
+import { GoldencardPipe } from 'src/app/pipes/goldencard.pipe';
 
 @NgModule({
   imports: [
@@ -16,6 +17,6 @@ import { ModlevelPipe } from '../../pipes/modlevel.pipe';
     IonicModule,
     MiperfilPageRoutingModule
   ],
-  declarations: [MiperfilPage, ModlevelPipe]
+  declarations: [MiperfilPage, ModlevelPipe, GoldencardPipe]
 })
 export class MiperfilPageModule {}

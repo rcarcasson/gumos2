@@ -83,16 +83,28 @@ export class ClashProvider {
 
     public getInfoJugador(playerTag: string): Observable<any> {
 
-        const cbOk = response => {
-            return response;
+        const resultDatos = {
+            playerInfo: {},
+            incomingChests: {}
         };
+
+        const cbOk = response => {
+            resultDatos.playerInfo = response;
+            return this.getIncomingChests(playerTag);
+        };
+
+        const cbOkChests = response => {
+            resultDatos.incomingChests = response;
+            return resultDatos;
+        }
 
         const cbError = error => {
             return throwError(error);
         };
 
         return this.clashService.getInfoJugador(playerTag)
-            .pipe(map(cbOk))
+            .pipe(mergeMap(cbOk))
+            .pipe(map(cbOkChests))
             .pipe(catchError(cbError));
     }
 

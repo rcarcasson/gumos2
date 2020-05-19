@@ -23,7 +23,11 @@ export class MiperfilPage implements OnInit {
   private tagPlayer = '';
 
   slideOpts = {
-    initialSlide: 1
+    slidesPerView: 3.3,
+    freeMode: true,
+    zoom: {
+      toggle: false
+    }
   };
 
   constructor(
@@ -37,8 +41,6 @@ export class MiperfilPage implements OnInit {
 
     this.infoPlayer = Convert.toPlayerInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.PLAYER_KEY')));
     this.chestInfo = ConvertChest.toChestInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CHEST_KEY')));
-    console.log(this.infoPlayer);
-    console.log(this.chestInfo);
     if (this.infoPlayer !== null) {
       this.titulo = this.infoPlayer.name;
       this.tagPlayer = _.replace(this.infoPlayer.tag, '#', '');
@@ -78,14 +80,16 @@ export class MiperfilPage implements OnInit {
     this.alertaService.showLoading('Actualizando información...');
 
     const cbOk = response => {
-      this.infoPlayer = response;
+      this.infoPlayer = _.get(response, 'playerInfo');
+      this.chestInfo = _.get(response, 'incomingChests');
       const playerInfo = Convert.toPlayerInfo(JSON.stringify(this.infoPlayer));
-      // const incomingChest = ConvertChest.toChestInfo(JSON.stringify(this.infoPlayer.))
+      const incomingChest = ConvertChest.toChestInfo(JSON.stringify(this.chestInfo));
       this.storageService.setData(_.get(CONST, 'GENERAL.PLAYER_KEY'), playerInfo);
+      this.storageService.setData(_.get(CONST, 'GENERAL.CHEST_KEY'), incomingChest);
       this.alertaService.hideLoading();
     };
 
-    const cbError = error => {
+    const cbError = () => {
       this.alertaService.hideLoading();
       const data = {
         title: 'Atención',

@@ -24,7 +24,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Mi Clan',
-      url: '/folder/Outbox',
+      url: '/miclan',
       icon: 'skull'
     },
     {

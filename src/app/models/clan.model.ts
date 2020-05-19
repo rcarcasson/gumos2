@@ -50,12 +50,12 @@ export interface Arena {
 }
 
 export enum Name {
-    Arena3 = 'Arena 3',
+    Arena10 = 'Arena 10',
     ChallengerII = 'Challenger II',
     ChallengerIII = 'Challenger III',
+    LegendaryArena = 'Arena Legendaria',
     MasterI = 'Maestros I',
     MasterII = 'Maestros II',
-    MasterIII = 'Maestros III',
 }
 
 export enum Role {
@@ -66,7 +66,7 @@ export enum Role {
 }
 
 // Converts JSON strings to/from your types
-export class Convert {
+export class ConvertClan {
     public static toClanInfo(json: string): ClanInfo {
         return JSON.parse(json);
     }

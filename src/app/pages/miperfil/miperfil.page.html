@@ -107,9 +107,21 @@
         <ion-item color="light" lines="full">
             <ion-label>Cofres a obtener</ion-label>
         </ion-item>
-        <ion-slides pager="true" [options]="slideOpts">
+        <ion-slides pager="false" [options]="slideOpts">
             <ion-slide *ngFor="let cofre of chestInfo.items">
-                <ion-img [src]="cofre.name | cofres"></ion-img>
+                <ion-card>
+                    <img [src]="cofre.name | cofres">
+                    <ion-card-header>
+                        <ion-card-subtitle>
+                            <ion-chip outline="true" color="tertiary">
+                                <ion-icon name="add-outline"></ion-icon>
+                                <ion-label>
+                                    {{cofre.index + 1}}
+                                </ion-label>
+                            </ion-chip>
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                </ion-card>
             </ion-slide>
         </ion-slides>
     </ion-card>

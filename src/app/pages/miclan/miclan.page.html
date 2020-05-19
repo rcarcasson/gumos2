@@ -1,0 +1,28 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="end">
+            <ion-button>
+                <ion-icon name="refresh"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+        <ion-title>{{titulo}}</ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+    <ion-segment color="primary" [(ngModel)]="clanSegment">
+        <ion-segment-button value="clanInfo">
+            Información
+        </ion-segment-button>
+        <ion-segment-button value="clanMembers">
+            Miembros
+        </ion-segment-button>
+    </ion-segment>
+    <div [ngSwitch]="clanSegment">
+        <ion-label *ngSwitchCase="'clanInfo'">Clan Info</ion-label>
+        <ion-label *ngSwitchCase="'clanMembers'">Clan Members</ion-label>
+    </div>
+</ion-content>

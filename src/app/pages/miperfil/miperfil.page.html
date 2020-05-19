@@ -105,6 +105,16 @@
     </ion-card>
     <ion-card>
         <ion-item color="light" lines="full">
+            <ion-label>Cofres a obtener</ion-label>
+        </ion-item>
+        <ion-slides pager="true" [options]="slideOpts">
+            <ion-slide *ngFor="let cofre of chestInfo.items">
+                <ion-img [src]="cofre.name | cofres"></ion-img>
+            </ion-slide>
+        </ion-slides>
+    </ion-card>
+    <ion-card>
+        <ion-item color="light" lines="full">
             <ion-label>Mis Batallas</ion-label>
         </ion-item>
         <ion-card-content>

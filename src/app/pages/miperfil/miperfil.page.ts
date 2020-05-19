@@ -21,6 +21,11 @@ export class MiperfilPage implements OnInit {
   public chestInfo: ChestInfo;
   public titulo = 'Mi Perfil';
   private tagPlayer = '';
+
+  slideOpts = {
+    initialSlide: 1
+  };
+
   constructor(
     private storageService: StorageService,
     private alertaService: AlertasService,

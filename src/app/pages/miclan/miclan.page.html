@@ -8,21 +8,90 @@
                 <ion-icon name="refresh"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>{{titulo}}</ion-title>
+        <ion-title>Mi Clan</ion-title>
     </ion-toolbar>
 </ion-header>
 
 <ion-content>
     <ion-segment color="primary" [(ngModel)]="clanSegment">
         <ion-segment-button value="clanInfo">
-            Información
+            <ion-icon name="information-circle-outline"></ion-icon>
+            <ion-label>Info</ion-label>
         </ion-segment-button>
         <ion-segment-button value="clanMembers">
-            Miembros
+            <ion-icon name="people-circle-outline"></ion-icon>
+            <ion-label>Miembros</ion-label>
         </ion-segment-button>
     </ion-segment>
     <div [ngSwitch]="clanSegment">
-        <ion-label *ngSwitchCase="'clanInfo'">Clan Info</ion-label>
-        <ion-label *ngSwitchCase="'clanMembers'">Clan Members</ion-label>
+        <ion-card *ngSwitchCase="'clanInfo'">
+            <ion-card-header color="light">
+                <ion-card-title>{{infoClan.name}}</ion-card-title>
+                <ion-card-subtitle>{{infoClan.description}}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+                <ion-list>
+                    <ion-item>
+                        <ion-label>Tag</ion-label>
+                        <ion-badge slot="end" color="primary">{{infoClan.tag}}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Copas del Clan</ion-label>
+                        <ion-badge slot="end" color="warning">{{infoClan.clanScore}}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Trofeos Requeridos</ion-label>
+                        <ion-badge slot="end" color="danger">{{infoClan.requiredTrophies}}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Trofeos de Guerra</ion-label>
+                        <ion-badge slot="end" color="warning">{{infoClan.clanWarTrophies}}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Nivel del Cofre del Clan</ion-label>
+                        <ion-badge slot="end" color="danger">{{infoClan.clanChestLevel}}</ion-badge>
+                    </ion-item>
+                    <ion-item>
+                        <ion-label>Miembros del Clan</ion-label>
+                        <ion-badge slot="end" color="dark">{{infoClan.members}} / 50</ion-badge>
+                    </ion-item>
+                    <ion-item lines="none">
+                        <ion-label>Donaciones por Semana</ion-label>
+                        <ion-badge slot="end" color="tertiary">{{infoClan.donationsPerWeek}}</ion-badge>
+                    </ion-item>
+
+                </ion-list>
+            </ion-card-content>
+        </ion-card>
+        <ion-label *ngSwitchCase="'clanMembers'">
+            <ion-list>
+                <ion-card *ngFor="let miembro of infoClan.memberList">
+                    <ion-card-header color="light">
+                        <ion-card-title>{{miembro.name}}</ion-card-title>
+                        <ion-card-subtitle>
+                            <ion-label>Ranking anterior: {{miembro.previousClanRank}}</ion-label>
+                        </ion-card-subtitle>
+                    </ion-card-header>
+                    <ion-card-content>
+                        <ion-grid class="ion-text-center">
+                            <ion-row>
+                                <ion-col size="6">
+                                    <ion-chip color="warning" outline="true">
+                                        <ion-icon name="trophy-outline"></ion-icon>
+                                        <ion-label>{{miembro.trophies}}</ion-label>
+                                    </ion-chip>
+                                </ion-col>
+                                <ion-col size="6">
+                                    <ion-chip color="warning" outline="true">
+                                        <ion-icon name="star-outline"></ion-icon>
+                                        <ion-label>{{miembro.expLevel}}</ion-label>
+                                    </ion-chip>
+                                </ion-col>
+                            </ion-row>
+                        </ion-grid>
+                    </ion-card-content>
+                </ion-card>
+            </ion-list>
+        </ion-label>
     </div>
 </ion-content>

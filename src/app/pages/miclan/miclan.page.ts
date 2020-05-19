@@ -13,7 +13,6 @@ import { NavController } from '@ionic/angular';
 export class MiclanPage implements OnInit {
 
   public infoClan: ClanInfo;
-  public titulo = 'Mi Clan';
   public clanSegment = 'clanInfo';
 
   constructor(
@@ -24,9 +23,7 @@ export class MiclanPage implements OnInit {
   ngOnInit() {
     this.infoClan = ConvertClan.toClanInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CLAN_KEY')));
     console.log(this.infoClan);
-    if (this.infoClan !== null) {
-      this.titulo = this.infoClan.name;
-    } else {
+    if (this.infoClan === null) {
       // tslint:disable-next-line: max-line-length
       const mensaje = 'OH! OH! Al parecer no perteneces a ningún clan.';
       this.navController.navigateRoot('error', {queryParams: { mensaje }, animated: true});

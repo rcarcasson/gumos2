@@ -8,6 +8,7 @@ import { ConvertChest } from 'src/app/models/inc-chest.model';
 import { CONST } from '../../constants/general.const';
 import _ from 'lodash';
 import { ConvertClan } from 'src/app/models/clan.model';
+import { ConvertWarDay } from 'src/app/models/warday.model';
 
 @Component({
   selector: 'app-settings',
@@ -94,10 +95,12 @@ export class SettingsPage implements OnInit {
     const playerInfo = Convert.toPlayerInfo(JSON.stringify(this.resultados.playerInfo));
     const chestPlayerInfo = ConvertChest.toChestInfo(JSON.stringify(this.resultados.incomingChests));
     const clanInfo = ConvertClan.toClanInfo(JSON.stringify(this.resultados.clanInfo));
+    const clanWar = ConvertWarDay.toWarDay(JSON.stringify(this.resultados.clanWar));
     this.storageService.setData(_.get(CONST, 'GENERAL.SETTINGS_KEY'), this.playerTag.value);
     this.storageService.setData(_.get(CONST, 'GENERAL.PLAYER_KEY'), playerInfo);
     this.storageService.setData(_.get(CONST, 'GENERAL.CHEST_KEY'), chestPlayerInfo);
     this.storageService.setData(_.get(CONST, 'GENERAL.CLAN_KEY'), clanInfo);
+    this.storageService.setData(_.get(CONST, 'GENERAL.WAR_KEY'), clanWar);
     this.alertaService.mostrarToast('Información guardada');
   }
 

@@ -20,9 +20,10 @@ export class ClashProvider {
             mensaje: _.get(MESSAGES, 'ERRORS.GENERAL_ERROR'),
             playerTagValid: true,
             playerInfo: {},
+            incomingChests: {},
             clanTagValid: true,
             clanInfo: {},
-            incomingChests: {}
+            clanWar: {}
         };
         let clanTag = '';
 
@@ -52,8 +53,16 @@ export class ClashProvider {
                 resultMessage.incomingChests = response;
             }
 
+            return this.getClanWar(clanTag);
+        };
+
+        const cbClanWar = response => {
+            if (_.get(response, 'reason') !== 'notFound') {
+                resultMessage.clanWar = response;
+            }
+
             return resultMessage;
-        }
+        };
 
         const cbError = error => {
             return throwError(error);
@@ -62,7 +71,8 @@ export class ClashProvider {
         return this.clashService.getInfoJugador(playerTag)
             .pipe(mergeMap(cbPlayerTag))
             .pipe(mergeMap(cbClanTag))
-            .pipe(map(cbIncomingChests))
+            .pipe(mergeMap(cbIncomingChests))
+            .pipe(map(cbClanWar))
             .pipe(catchError(cbError));
     }
 
@@ -81,6 +91,20 @@ export class ClashProvider {
             .pipe(catchError(cbError));
     }
 
+    public getClanWar(clanTag: string): Observable<any> {
+        const cbWarOk = response => {
+            return response;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.getWarInfo(clanTag)
+            .pipe(map(cbWarOk))
+            .pipe(catchError(cbError));
+    }
+
     public getInfoJugador(playerTag: string): Observable<any> {
 
         const resultDatos = {
@@ -96,7 +120,7 @@ export class ClashProvider {
         const cbOkChests = response => {
             resultDatos.incomingChests = response;
             return resultDatos;
-        }
+        };
 
         const cbError = error => {
             return throwError(error);

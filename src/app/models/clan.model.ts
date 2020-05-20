@@ -59,10 +59,10 @@ export enum Name {
 }
 
 export enum Role {
-    CoLeader = 'Co-Lider',
-    Elder = 'Sabio',
-    Leader = 'Lider',
-    Member = 'Miembro',
+    coLeader = 'Co-Lider',
+    elder = 'Sabio',
+    leader = 'Lider',
+    member = 'Miembro',
 }
 
 // Converts JSON strings to/from your types

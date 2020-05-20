@@ -29,7 +29,7 @@ export class ClashService {
   }
 
   public getInfoJugador(tag: string): Observable<any> {
-    this.endpoint = _.get(ENDPOINTS, 'PLAYER.GET_PLAYER_INFO', '');
+    this.endpoint = _.get(ENDPOINTS, 'PLAYER.GET_INFO', '');
     this.endpoint = _.replace(this.endpoint, '{playerTag}', tag);
     const finalProxyURL = _.replace(this.proxyURL, '{url}', this.endpoint);
 
@@ -38,7 +38,7 @@ export class ClashService {
   }
 
   public getClanInfo(clanTag: string): Observable<any> {
-    this.endpoint = _.get(ENDPOINTS, 'CLAN.GET_CLAN_INFO', '');
+    this.endpoint = _.get(ENDPOINTS, 'CLAN.GET_INFO', '');
     this.endpoint = _.replace(this.endpoint, '{clanTag}', clanTag);
     const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
 
@@ -49,6 +49,15 @@ export class ClashService {
   public getIncomingChests(tag: string): Observable<any> {
     this.endpoint = _.get(ENDPOINTS, 'PLAYER.GET_INCOMING_CHESTS', '');
     this.endpoint = _.replace(this.endpoint, '{playerTag}', tag);
+    const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
+
+    return this.http.get(finalProxyUrl)
+      .pipe(catchError(this.cbFailure));
+  }
+
+  public getWarInfo(clanTag: string): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'CLAN.GET_CURRENT_WAR', '');
+    this.endpoint = _.replace(this.endpoint, '{clanTag}', clanTag);
     const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
 
     return this.http.get(finalProxyUrl)

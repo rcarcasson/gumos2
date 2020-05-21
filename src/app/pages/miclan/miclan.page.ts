@@ -5,6 +5,9 @@ import _ from 'lodash';
 import { CONST } from 'src/app/constants/general.const';
 import { NavController, IonContent } from '@ionic/angular';
 import { WarDay, ConvertWarDay } from 'src/app/models/warday.model';
+import { AlertasService } from 'src/app/shared/alertas.service';
+import { ClashProvider } from 'src/app/providers/clashservice.provider';
+import { ModalProvider } from '../modals/modal.provider';
 
 @Component({
   selector: 'app-miclan',
@@ -18,10 +21,14 @@ export class MiclanPage implements OnInit {
   public infoWar: WarDay;
   public clanSegment = 'clanInfo';
   public urlBanner = '';
+  public evento = '';
 
   constructor(
     private storageService: StorageService,
-    private navController: NavController
+    private navController: NavController,
+    private alertaService: AlertasService,
+    private clashProvider: ClashProvider,
+    private modalProvider: ModalProvider
   ) { }
 
   ngOnInit() {
@@ -32,7 +39,8 @@ export class MiclanPage implements OnInit {
       const mensaje = 'OH! OH! Al parecer no perteneces a ningún clan.';
       this.navController.navigateRoot('error', {queryParams: { mensaje }, animated: true});
     }
-    if (_.get(this.infoWar, 'state', '') === 'warDay') {
+    this.evento = _.get(this.infoWar, 'state', '');
+    if ( this.evento === 'warDay') {
       this.urlBanner = '../../../assets/banner_war.jpeg';
     } else {
       this.urlBanner = '../../../assets/banner_col.jpeg';
@@ -40,12 +48,42 @@ export class MiclanPage implements OnInit {
 
   }
 
-  public update() {
-    const clanTag = _.replace(_.get(this.infoClan, 'tag', ''), '#', '');
+  async mostrarPerfil(tag: string) {
+    this.alertaService.showLoading('Obteniendo info...');
+    const finalTag = tag.replace('#', '');
+
+    const cbOk = async response => {
+      this.alertaService.hideLoading();
+      const modal = await this.modalProvider.infoPerfil(response);
+      return modal.present();
+    };
+
+    const cbError = error => {
+      this.alertaService.hideLoading();
+      console.log(error);
+    };
+
+    this.clashProvider.getInfoJugador(finalTag).subscribe(cbOk, cbError);
   }
 
-  private getClanInfo() {
+  public update() {
+    const clanTag = _.replace(_.get(this.infoClan, 'tag', ''), '#', '');
+    this.alertaService.showLoading('Actualizando info...');
 
+    const cbOk = response => {
+      this.alertaService.hideLoading();
+      console.log(response);
+      this.storageService.setData(_.get(CONST, 'GENERAL.CLAN_KEY'), ConvertClan.toClanInfo(JSON.stringify(_.get(response, 'clanInfo'))));
+      this.storageService.setData(_.get(CONST, 'GENERAL.WAR_KEY'), ConvertWarDay.toWarDay(JSON.stringify(_.get(response, 'clanWar'))));
+      this.infoClan = ConvertClan.toClanInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CLAN_KEY')));
+      this.infoWar = ConvertWarDay.toWarDay(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.WAR_KEY')));
+    };
+
+    const cbError = error => {
+      this.alertaService.hideLoading();
+    };
+
+    this.clashProvider.getClanInfo(clanTag).subscribe(cbOk, cbError);
   }
 
   public changeSegment() {

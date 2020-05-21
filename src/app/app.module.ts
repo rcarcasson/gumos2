@@ -11,14 +11,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { ClashProvider } from './providers/clashservice.provider';
 import { ClashService } from './providers/clashservice.service';
+import { MiclanPageModule } from './pages/miclan/miclan.module';
 
 @NgModule({
   declarations: [AppComponent],
-  entryComponents: [],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
     HttpClientModule,
+    MiclanPageModule,
     AppRoutingModule
   ],
   providers: [

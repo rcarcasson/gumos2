@@ -4,6 +4,7 @@ import { throwError, Observable, pipe } from 'rxjs';
 import _ from 'lodash';
 import { map, catchError, mergeMap } from 'rxjs/operators';
 import { MESSAGES } from '../constants/messages.const';
+import { AlertasService } from '../shared/alertas.service';
 
 
 @Injectable()
@@ -11,6 +12,7 @@ export class ClashProvider {
 
     constructor(
         private clashService: ClashService,
+        private alertaService: AlertasService
     ) {}
 
     public validarTags(dataTag: any): Observable<any> {
@@ -143,6 +145,32 @@ export class ClashProvider {
 
         return this.clashService.getIncomingChests(playerTag)
             .pipe(map(cbOk))
+            .pipe(catchError(cbError));
+    }
+
+    public getClanInfo(clanTag: string): Observable<any> {
+        const result = {
+            clanInfo: {},
+            clanWar: {}
+        };
+
+        const cbClanOk = response => {
+            result.clanInfo = response;
+            return this.getClanWar(clanTag);
+        };
+
+        const cbWarOk = response => {
+            result.clanWar = response;
+            return result;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.getClanInfo(clanTag)
+            .pipe(mergeMap(cbClanOk))
+            .pipe(map(cbWarOk))
             .pipe(catchError(cbError));
     }
 }

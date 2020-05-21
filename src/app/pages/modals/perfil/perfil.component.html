@@ -1,11 +1,11 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-buttons slot="start">
-            <ion-menu-button></ion-menu-button>
-        </ion-buttons>
         <ion-buttons slot="end">
-            <ion-button (click)="actualizar()">
-                <ion-icon name="refresh"></ion-icon>
+            <ion-button (click)="favorite()">
+                <ion-icon [name]="corazon"></ion-icon>
+            </ion-button>
+            <ion-button (click)="cerrar()">
+                <ion-icon name="close"></ion-icon>
             </ion-button>
         </ion-buttons>
         <ion-title>{{titulo}}</ion-title>

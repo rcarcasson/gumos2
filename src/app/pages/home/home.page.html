@@ -11,7 +11,7 @@
     <ion-grid>
         <ion-row>
             <ion-col>
-                <ion-card>
+                <ion-card button (click)="navegar('miperfil')">
                     <ion-card-header>
                         <ion-card-title class="item-icon">
                             <ion-icon class="icon" name="person"></ion-icon>
@@ -25,7 +25,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-card>
+                <ion-card button (click)="navegar('miclan')">
                     <ion-card-header>
                         <ion-card-title class="item-icon">
                             <ion-icon class="icon" name="skull"></ion-icon>
@@ -39,7 +39,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-card>
+                <ion-card button (click)="navegar('favoritos')">
                     <ion-card-header>
                         <ion-card-title class="item-icon">
                             <ion-icon class="icon" name="heart"></ion-icon>
@@ -53,7 +53,7 @@
         </ion-row>
         <ion-row>
             <ion-col>
-                <ion-card>
+                <ion-card button (click)="navegar('settings')">
                     <ion-card-header>
                         <ion-card-title class="item-icon">
                             <ion-icon class="icon" name="settings"></ion-icon>

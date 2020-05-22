@@ -2,19 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { PerfilComponent } from './perfil/perfil.component';
-import { ModlevelPipe } from 'src/app/pipes/modlevel.pipe';
-import { GoldencardPipe } from 'src/app/pipes/goldencard.pipe';
-import { CofresPipe } from 'src/app/pipes/cofres.pipe';
+import { PipesModule } from 'src/app/pipes/pipes.module';
 
 
 @NgModule({
-  declarations: [PerfilComponent, ModlevelPipe, GoldencardPipe, CofresPipe],
+  declarations: [PerfilComponent],
   exports: [
     PerfilComponent
   ],
   imports: [
     CommonModule,
-    IonicModule
+    IonicModule,
+    PipesModule
   ]
 })
 export class ModalsModule { }

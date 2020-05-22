@@ -11,11 +11,12 @@ export class ModalProvider {
         private modalCtrl: ModalController
     ) {}
 
-    async infoPerfil(data: any) {
+    async infoPerfil(data: any, showHeart: boolean) {
         const modal = await this.modalCtrl.create({
             componentProps: {
                 infoPlayer: _.get(data, 'playerInfo'),
-                chestInfo: _.get(data, 'incomingChests')
+                chestInfo: _.get(data, 'incomingChests'),
+                showHeart
             },
             component: PerfilComponent
         });

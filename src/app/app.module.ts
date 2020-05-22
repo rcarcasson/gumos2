@@ -12,6 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClashProvider } from './providers/clashservice.provider';
 import { ClashService } from './providers/clashservice.service';
 import { MiclanPageModule } from './pages/miclan/miclan.module';
+import { PipesModule } from './pipes/pipes.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,8 +20,9 @@ import { MiclanPageModule } from './pages/miclan/miclan.module';
     BrowserModule,
     IonicModule.forRoot(),
     HttpClientModule,
-    MiclanPageModule,
-    AppRoutingModule
+    PipesModule,
+    AppRoutingModule,
+    MiclanPageModule
   ],
   providers: [
     StatusBar,

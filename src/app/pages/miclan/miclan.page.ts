@@ -39,13 +39,17 @@ export class MiclanPage implements OnInit {
       const mensaje = 'OH! OH! Al parecer no perteneces a ningún clan.';
       this.navController.navigateRoot('error', {queryParams: { mensaje }, animated: true});
     }
+    this.updateImage();
+
+  }
+
+  private updateImage() {
     this.evento = _.get(this.infoWar, 'state', '');
-    if ( this.evento === 'warDay') {
+    if (this.evento === 'warDay') {
       this.urlBanner = '../../../assets/banner_war.jpeg';
     } else {
       this.urlBanner = '../../../assets/banner_col.jpeg';
     }
-
   }
 
   async mostrarPerfil(tag: string) {
@@ -54,7 +58,7 @@ export class MiclanPage implements OnInit {
 
     const cbOk = async response => {
       this.alertaService.hideLoading();
-      const modal = await this.modalProvider.infoPerfil(response);
+      const modal = await this.modalProvider.infoPerfil(response, true);
       return modal.present();
     };
 
@@ -72,11 +76,11 @@ export class MiclanPage implements OnInit {
 
     const cbOk = response => {
       this.alertaService.hideLoading();
-      console.log(response);
       this.storageService.setData(_.get(CONST, 'GENERAL.CLAN_KEY'), ConvertClan.toClanInfo(JSON.stringify(_.get(response, 'clanInfo'))));
       this.storageService.setData(_.get(CONST, 'GENERAL.WAR_KEY'), ConvertWarDay.toWarDay(JSON.stringify(_.get(response, 'clanWar'))));
       this.infoClan = ConvertClan.toClanInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CLAN_KEY')));
       this.infoWar = ConvertWarDay.toWarDay(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.WAR_KEY')));
+      this.updateImage();
     };
 
     const cbError = error => {

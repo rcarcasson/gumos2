@@ -8,10 +8,6 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
-    path: 'folder/:id',
-    loadChildren: () => import('./folder/folder.module').then( m => m.FolderPageModule)
-  },
-  {
     path: 'miperfil',
     loadChildren: () => import('./pages/miperfil/miperfil.module').then( m => m.MiperfilPageModule)
   },
@@ -30,6 +26,10 @@ const routes: Routes = [
   {
     path: 'miclan',
     loadChildren: () => import('./pages/miclan/miclan.module').then( m => m.MiclanPageModule)
+  },
+  {
+    path: 'favoritos',
+    loadChildren: () => import('./pages/favoritos/favoritos.module').then( m => m.FavoritosPageModule)
   }
 ];
 

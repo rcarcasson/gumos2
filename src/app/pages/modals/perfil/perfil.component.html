@@ -1,7 +1,7 @@
 <ion-header>
     <ion-toolbar color="primary">
         <ion-buttons slot="end">
-            <ion-button (click)="favorite()">
+            <ion-button (click)="favorite()" *ngIf="showHeart">
                 <ion-icon [name]="corazon"></ion-icon>
             </ion-button>
             <ion-button (click)="cerrar()">

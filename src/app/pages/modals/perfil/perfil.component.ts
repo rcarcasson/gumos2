@@ -4,6 +4,7 @@ import { PlayerInfo } from 'src/app/models/player.model';
 import { Chart } from 'chart.js';
 import { ChestInfo } from 'src/app/models/inc-chest.model';
 import { ModalController } from '@ionic/angular';
+import { AlertasService } from 'src/app/shared/alertas.service';
 
 @Component({
   selector: 'app-perfil',
@@ -13,6 +14,7 @@ import { ModalController } from '@ionic/angular';
 export class PerfilComponent implements OnInit {
   @Input() infoPlayer: PlayerInfo;
   @Input() chestInfo: ChestInfo;
+  @Input() showHeart;
   @ViewChild('battlesChart', {static: true}) battlesChart;
 
   public titulo = 'Mi Perfil';
@@ -27,11 +29,15 @@ export class PerfilComponent implements OnInit {
   };
 
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController,
+    private alertaService: AlertasService
   ) { }
 
   ngOnInit() {
     this.titulo = _.get(this.infoPlayer, 'name');
+    if (this.checkFavorite()) {
+      this.corazon = 'heart';
+    }
   }
 
   ionViewDidEnter() {
@@ -64,14 +70,43 @@ export class PerfilComponent implements OnInit {
   }
 
   favorite() {
-    let favoritos: Array<string>;
-    favoritos = JSON.parse(localStorage.getItem('favoritos'));
-    if (_.indexOf(favoritos, _.get(this.infoPlayer, 'name')) !== -1 || favoritos === []) {
-      favoritos.push(_.get(this.infoPlayer, 'name'));
+    const player = _.get(this.infoPlayer, 'name');
+    let favoritos = JSON.parse(localStorage.getItem('favPlayer'));
+    if (favoritos === null) {
+      favoritos = [];
+    }
+    if (this.playerIndex(player, favoritos) === -1 || favoritos.length === 0) {
+      const data = {
+        playerName: player,
+        playerTag: _.get(this.infoPlayer, 'tag'),
+        type: 'player'
+      };
+      favoritos.push(data);
       this.corazon = 'heart';
-      localStorage.setItem('favoritos', JSON.stringify(favoritos));
+      localStorage.setItem('favPlayer', JSON.stringify(favoritos));
+      this.alertaService.mostrarToast(player + ' agregado a tus favoritos');
+    } else {
+      const removidos = _.remove(favoritos, (p) => p.playerName === player );
+      localStorage.setItem('favPlayer', JSON.stringify(favoritos));
+      this.corazon = 'heart-outline';
+      this.alertaService.mostrarToast(player + ' eliminado de tus favoritos');
     }
 
+  }
+
+  private checkFavorite() {
+    let existe = true;
+    let favoritos = [];
+    const player = _.get(this.infoPlayer, 'name');
+    favoritos = JSON.parse(localStorage.getItem('favPlayer'));
+    if (this.playerIndex(player, favoritos) === -1 || favoritos.length === 0) {
+      existe = false;
+    }
+    return existe;
+  }
+
+  private playerIndex(player: string, fav: any) {
+    return _.findIndex(fav, { playerName : player});
   }
 
 }

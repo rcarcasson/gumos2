@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Favoritos',
-      url: '/folder/Favorites',
+      url: '/favoritos',
       icon: 'heart'
     },
     {
@@ -55,9 +55,8 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    const path = window.location.pathname.split('folder/')[1];
-    if (path !== undefined) {
-      this.selectedIndex = this.appPages.findIndex(page => page.title.toLowerCase() === path.toLowerCase());
+    if (localStorage.getItem('favPlayer') === null) {
+      localStorage.setItem('favPlayer', JSON.stringify([]));
     }
   }
 }

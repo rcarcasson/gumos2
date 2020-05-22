@@ -7,17 +7,16 @@ import { IonicModule } from '@ionic/angular';
 import { MiperfilPageRoutingModule } from './miperfil-routing.module';
 
 import { MiperfilPage } from './miperfil.page';
-import { ModlevelPipe } from '../../pipes/modlevel.pipe';
-import { GoldencardPipe } from 'src/app/pipes/goldencard.pipe';
-import { CofresPipe } from 'src/app/pipes/cofres.pipe';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    MiperfilPageRoutingModule
+    MiperfilPageRoutingModule,
+    PipesModule
   ],
-  declarations: [MiperfilPage, ModlevelPipe, GoldencardPipe, CofresPipe]
+  declarations: [MiperfilPage]
 })
 export class MiperfilPageModule {}

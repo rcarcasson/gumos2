@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Component({
   selector: 'app-home',
@@ -9,10 +10,14 @@ import { NavController } from '@ionic/angular';
 export class HomePage implements OnInit {
 
   constructor(
-    private navController: NavController
+    private navController: NavController,
+    private splashScreen: SplashScreen,
   ) { }
 
   ngOnInit() {
+    setTimeout(() => {
+      this.splashScreen.hide();
+    }, 1000);
   }
 
   navegar(url) {

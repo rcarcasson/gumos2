@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 
 import { Platform } from '@ionic/angular';
-import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AppVersion } from '@ionic-native/app-version/ngx';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +11,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 })
 export class AppComponent implements OnInit {
   public selectedIndex = 0;
+  darkMode = true;
+  protected appVer: string;
   public appPages = [
     {
       title: 'Home',
@@ -19,17 +21,17 @@ export class AppComponent implements OnInit {
     },
     {
       title: 'Mi Perfil',
-      url: '/miperfil',
+      url: 'miperfil',
       icon: 'person'
     },
     {
       title: 'Mi Clan',
-      url: '/miclan',
+      url: 'miclan',
       icon: 'skull'
     },
     {
       title: 'Favoritos',
-      url: '/favoritos',
+      url: 'favoritos',
       icon: 'heart'
     },
     {
@@ -41,16 +43,17 @@ export class AppComponent implements OnInit {
 
   constructor(
     private platform: Platform,
-    private splashScreen: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar,
+    private appVersion: AppVersion
   ) {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    this.darkMode = prefersDark.matches;
     this.initializeApp();
   }
 
   initializeApp() {
     this.platform.ready().then(() => {
-      this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      this.statusBar.styleBlackTranslucent();
     });
   }
 
@@ -58,5 +61,11 @@ export class AppComponent implements OnInit {
     if (localStorage.getItem('favPlayer') === null) {
       localStorage.setItem('favPlayer', JSON.stringify([]));
     }
+    this.appVersion.getVersionNumber().then( (versionNumber) => {
+      this.appVer = versionNumber;
+    },
+    (error) => {
+      this.appVer = '';
+    });
   }
 }

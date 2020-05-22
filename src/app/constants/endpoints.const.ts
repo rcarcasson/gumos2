@@ -11,6 +11,6 @@ export const ENDPOINTS = {
         GET_INCOMING_CHESTS: 'https://proxy.royaleapi.dev/v1/players/%23{playerTag}/upcomingchests'
     },
     PROXY: {
-        GET_PROXY_URL: 'http://192.168.0.30/proxycr/proxy.php?url={url}'
+        GET_PROXY_URL: 'https://www.comunidadvallegrande.cl/g5m4s/proxy.php?url={url}'
     }
 };

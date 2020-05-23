@@ -173,4 +173,29 @@ export class ClashProvider {
             .pipe(map(cbWarOk))
             .pipe(catchError(cbError));
     }
+
+    public checkUpdate(appVersion: string): Observable<any> {
+        const result = {
+            code: 0,
+            message: '',
+            url: ''
+        };
+
+        const cbOK = response => {
+            if (_.get(response, 'version') !== appVersion) {
+                result.code = 200;
+                result.message = 'Hay una actualización disponible para descargar.';
+                result.url = _.get(response, 'url');
+            }
+            return result;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.checkUpdate()
+            .pipe(map(cbOK))
+            .pipe(catchError(cbError));
+    }
 }

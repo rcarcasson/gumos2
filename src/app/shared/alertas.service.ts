@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AlertController, LoadingController, ToastController } from '@ionic/angular';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import _ from 'lodash';
 
 
@@ -12,7 +13,8 @@ export class AlertasService {
     constructor(
         private alertController: AlertController,
         private loadingController: LoadingController,
-        private toastController: ToastController
+        private toastController: ToastController,
+        private iab: InAppBrowser
     ) {}
 
     async showLoading(message?: string) {
@@ -38,6 +40,7 @@ export class AlertasService {
         const alerta = await this.alertController.create({
             header: _.get(data, 'title'),
             message: _.get(data, 'message'),
+            backdropDismiss: false,
             buttons: ['Aceptar']
         });
         return alerta.present();
@@ -49,6 +52,28 @@ export class AlertasService {
             duration: 2000
         });
         return toast.present();
+    }
+
+    async descargarUpdate(data: any) {
+        const alerta = await this.alertController.create({
+            header: _.get(data, 'title'),
+            message: _.get(data, 'message'),
+            buttons: [
+                {
+                    text: 'Cerrar',
+                    role: 'close',
+                },
+                {
+                    text: 'Descargar',
+                    role: 'download',
+                    cssClass: 'secondary',
+                    handler: () => {
+                        this.iab.create(_.get(data, 'url'), '_system');
+                    }
+                }
+            ]
+        });
+        return alerta.present();
     }
 
 }

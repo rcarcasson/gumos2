@@ -63,4 +63,11 @@ export class ClashService {
     return this.http.get(finalProxyUrl)
       .pipe(catchError(this.cbFailure));
   }
+
+  public checkUpdate(): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'UPDATE.URL', '');
+
+    return this.http.get(this.endpoint)
+      .pipe(catchError(this.cbFailure));
+  }
 }

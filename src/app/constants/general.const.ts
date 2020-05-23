@@ -4,6 +4,7 @@ export const CONST = {
         PLAYER_KEY: 'player',
         CLAN_KEY: 'clan',
         CHEST_KEY: 'chest',
-        WAR_KEY: 'clan-war'
+        WAR_KEY: 'clan-war',
+        VERSION: '2.0.0'
     }
 };

@@ -12,5 +12,8 @@ export const ENDPOINTS = {
     },
     PROXY: {
         GET_PROXY_URL: 'https://www.comunidadvallegrande.cl/g5m4s/proxy.php?url={url}'
+    },
+    UPDATE: {
+        URL: 'https://www.comunidadvallegrande.cl/g5m4s/checkupdate.php'
     }
 };

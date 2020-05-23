@@ -13,7 +13,7 @@ import { ClashProvider } from './providers/clashservice.provider';
 import { ClashService } from './providers/clashservice.service';
 import { MiclanPageModule } from './pages/miclan/miclan.module';
 import { PipesModule } from './pipes/pipes.module';
-import { AppVersion } from '@ionic-native/app-version/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +30,7 @@ import { AppVersion } from '@ionic-native/app-version/ngx';
     SplashScreen,
     ClashProvider,
     ClashService,
-    AppVersion,
+    InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

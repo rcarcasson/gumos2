@@ -7,3 +7,7 @@ estadística de los jugadores, tanto de su perfil de jugador como de su clan si 
 
 # Frameworks utilizados
 Ionic 5 bajo Angular 7
+
+# Disclaimer
+
+This content is not affiliated with, endorsed, sponsored, or specifically approved by Supercell and Supercell is not responsible for it. For more information see Supercell’s Fan Content Policy: www.supercell.com/fan-content-policy.

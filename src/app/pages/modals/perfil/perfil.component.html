@@ -15,7 +15,15 @@
 <ion-content>
     <ion-card>
         <ion-item color="light" lines="full">
-            <ion-label>Arena</ion-label>
+            <ion-avatar slot="start">
+                <img src="../../../../assets/exp-levels/{{infoPlayer.expLevel}}.png">
+            </ion-avatar>
+            <ion-label>
+                {{infoPlayer.name}}
+                <h4>
+                    {{infoPlayer.tag}}
+                </h4>
+            </ion-label>
         </ion-item>
         <ion-card-content class="ion-text-center">
             <ion-item lines="none">
@@ -27,36 +35,20 @@
                         {{infoPlayer.arena.name}}
                     </h1>
                 </ion-label>
+                <ion-thumbnail slot="end">
+                    <img src="../../../../assets/ui-icons/trophies.png">
+                </ion-thumbnail>
+                <ion-label slot="end">
+                    <h1>{{infoPlayer.trophies}}</h1>
+                </ion-label>
             </ion-item>
         </ion-card-content>
     </ion-card>
     <ion-card>
         <ion-item color="light" lines="full">
-            <ion-label>Status</ion-label>
-        </ion-item>
-        <ion-list>
-            <ion-item>
-                <ion-label>Tag</ion-label>
-                <ion-badge slot="end" color="light">{{infoPlayer.tag}}</ion-badge>
-            </ion-item>
-            <ion-item>
-                <ion-label>Nivel de Exp</ion-label>
-                <ion-avatar slot="end">
-                    <img src="../../../assets/exp-levels/{{infoPlayer.expLevel}}.png">
-                </ion-avatar>
-            </ion-item>
-            <ion-item>
-                <ion-label>Coronas</ion-label>
-                <ion-badge slot="end">{{infoPlayer.trophies}}</ion-badge>
-            </ion-item>
-            <ion-item lines="none">
-                <ion-label>Puntos Estelares</ion-label>
-                <ion-badge slot="end" color="warning">{{infoPlayer.starPoints}}</ion-badge>
-            </ion-item>
-        </ion-list>
-    </ion-card>
-    <ion-card>
-        <ion-item color="light" lines="full">
+            <ion-thumbnail slot="start">
+                <img src="../../../../assets/ui-icons/cards.png">
+            </ion-thumbnail>
             <ion-label>Mazo</ion-label>
         </ion-item>
         <ion-grid class="ion-text-center">
@@ -124,6 +116,9 @@
     </ion-card>
     <ion-card>
         <ion-item color="light" lines="full">
+            <ion-thumbnail slot="start">
+                <img src="../../../../assets/ui-icons/legendary-chest-open.png">
+            </ion-thumbnail>
             <ion-label>Cofres a obtener</ion-label>
         </ion-item>
         <ion-slides pager="false" [options]="slideOpts">
@@ -150,7 +145,10 @@
     </ion-card>
     <ion-card>
         <ion-item color="light" lines="full">
-            <ion-label>Mis Batallas</ion-label>
+            <ion-thumbnail slot="start">
+                <img src="../../../../assets/ui-icons/swords.png">
+            </ion-thumbnail>
+            <ion-label>Batallas</ion-label>
         </ion-item>
         <ion-card-content>
             <canvas #battlesChart></canvas>
@@ -158,6 +156,9 @@
     </ion-card>
     <ion-card *ngIf="infoPlayer.leagueStatistics">
         <ion-item color="light" lines=full>
+            <ion-thumbnail slot="start">
+                <img src="../../../../assets/ui-icons/grand.png">
+            </ion-thumbnail>
             <ion-label>Estadísticas de Liga</ion-label>
         </ion-item>
         <ion-list>
@@ -177,6 +178,9 @@
     </ion-card>
     <ion-card>
         <ion-item color="light" lines=full>
+            <ion-thumbnail slot="start">
+                <img src="../../../../assets/ui-icons/book.png">
+            </ion-thumbnail>
             <ion-label>Otros</ion-label>
         </ion-item>
         <ion-list>

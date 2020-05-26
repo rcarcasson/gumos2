@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PerfilComponent } from './perfil/perfil.component';
 import _ from 'lodash';

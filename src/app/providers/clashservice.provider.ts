@@ -198,4 +198,28 @@ export class ClashProvider {
             .pipe(map(cbOK))
             .pipe(catchError(cbError));
     }
+
+    public battleLog(tag: string): Observable<any> {
+        const result = {
+            code: 0,
+            message: '',
+            battleLog: []
+        };
+
+        const cbOk = response => {
+            result.code = 200;
+            result.battleLog = response;
+            return result;
+        };
+
+        const cbError = error => {
+            result.code = 555;
+            result.message = 'El jugador no posee historial de batallas.';
+            return throwError(result);
+        };
+
+        return this.clashService.battleLog(tag)
+            .pipe(map(cbOk))
+            .pipe(catchError(cbError));
+    }
 }

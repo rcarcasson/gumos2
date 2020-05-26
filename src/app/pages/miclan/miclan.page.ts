@@ -22,6 +22,7 @@ export class MiclanPage implements OnInit {
   public clanSegment = 'clanInfo';
   public urlBanner = '';
   public evento = '';
+  public existeClan = true;
 
   constructor(
     private storageService: StorageService,
@@ -34,12 +35,13 @@ export class MiclanPage implements OnInit {
   ngOnInit() {
     this.infoClan = ConvertClan.toClanInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CLAN_KEY')));
     this.infoWar = ConvertWarDay.toWarDay(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.WAR_KEY')));
-    if (this.infoClan === null) {
-      // tslint:disable-next-line: max-line-length
+    if (this.infoClan === null || _.get(this.infoClan, 'name', '') === '') {
+      this.existeClan = false;
       const mensaje = 'OH! OH! Al parecer no perteneces a ningún clan.';
       this.navController.navigateRoot('error', {queryParams: { mensaje }, animated: true});
+    } else {
+      this.updateImage();
     }
-    this.updateImage();
 
   }
 

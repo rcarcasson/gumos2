@@ -7,7 +7,8 @@ import { Chart } from 'chart.js';
 import { AlertasService } from 'src/app/shared/alertas.service';
 import { ClashProvider } from 'src/app/providers/clashservice.provider';
 import { ConvertChest, ChestInfo } from 'src/app/models/inc-chest.model';
-import { NavController } from '@ionic/angular';
+import { NavController, IonContent } from '@ionic/angular';
+import { BattleLog, ConvertBattle } from 'src/app/models/battlelog.model';
 
 @Component({
   selector: 'app-miperfil',
@@ -15,12 +16,17 @@ import { NavController } from '@ionic/angular';
   styleUrls: ['./miperfil.page.scss'],
 })
 export class MiperfilPage implements OnInit {
-  @ViewChild('battlesChart', {static: true}) battlesChart;
+  // @ViewChild('battlesChart', {static: false}) battlesChart;
+  @ViewChild(IonContent, {static: false}) contentArea: IonContent;
 
   public infoPlayer: PlayerInfo;
   public chestInfo: ChestInfo;
+  public battleInfo: BattleLog[];
   public titulo = 'Mi Perfil';
   private tagPlayer = '';
+  public perfilSegment = 'playerBattles';
+  public existeClan = true;
+  public cargado = false;
 
   slideOpts = {
     slidesPerView: 3.3,
@@ -44,6 +50,9 @@ export class MiperfilPage implements OnInit {
     if (this.infoPlayer !== null) {
       this.titulo = this.infoPlayer.name;
       this.tagPlayer = _.replace(this.infoPlayer.tag, '#', '');
+      if (_.get(this.infoPlayer, 'clan', '') === '') {
+        this.existeClan = false;
+      }
     } else {
       // tslint:disable-next-line: max-line-length
       const mensaje = 'No hay información para desplegar de tu perfil. Ve a Configuración en el menú superior izquierdo para establecer tu tag.';
@@ -52,29 +61,30 @@ export class MiperfilPage implements OnInit {
   }
 
   ionViewDidEnter() {
-    this.graficoBatallas();
+    // this.graficoBatallas();
   }
 
-  graficoBatallas() {
-    const myPieChart = new Chart(this.battlesChart.nativeElement, {
-      type: 'pie',
-      data: {
-        // tslint:disable-next-line: max-line-length
-        labels: ['Victorias: ' + this.infoPlayer.wins, 'Derrotas: ' + this.infoPlayer.losses, 'Vic. 3 coronas: ' + this.infoPlayer.threeCrownWins],
-        datasets: [{
-          label: 'Batallas',
-          data: [
-            this.infoPlayer.wins, this.infoPlayer.losses, this.infoPlayer.threeCrownWins
-          ],
-          backgroundColor: [
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(255, 206, 86, 1)'
-          ]
-        }]
-      }
-    });
-  }
+  // graficoBatallas() {
+  //   const myPieChart = new Chart(this.battlesChart.nativeElement, {
+  //     type: 'pie',
+  //     data: {
+  //       // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: max-line-length
+  //       labels: ['Victorias: ' + this.infoPlayer.wins, 'Derrotas: ' + this.infoPlayer.losses, 'Vic. 3 coronas: ' + this.infoPlayer.threeCrownWins],
+  //       datasets: [{
+  //         label: 'Batallas',
+  //         data: [
+  //           this.infoPlayer.wins, this.infoPlayer.losses, this.infoPlayer.threeCrownWins
+  //         ],
+  //         backgroundColor: [
+  //           'rgba(54, 162, 235, 1)',
+  //           'rgba(255, 99, 132, 1)',
+  //           'rgba(255, 206, 86, 1)'
+  //         ]
+  //       }]
+  //     }
+  //   });
+  // }
 
   actualizar() {
     this.alertaService.showLoading('Actualizando información...');
@@ -99,6 +109,34 @@ export class MiperfilPage implements OnInit {
     };
 
     this.clashProvider.getInfoJugador(this.tagPlayer).subscribe(cbOk, cbError);
+  }
+
+  changeSegment() {
+    this.contentArea.scrollToTop(500);
+    if (this.perfilSegment === 'playerBattles') {
+      if (_.isEmpty(this.battleInfo)) {
+        this.battleLog();
+      } else {
+        console.log(this.battleInfo);
+      }
+    }
+  }
+
+  private battleLog() {
+    this.alertaService.showLoading('Obteniendo información...');
+
+    const cbOK = response => {
+      this.alertaService.hideLoading();
+      this.battleInfo = _.get(response, 'battleLog');
+      this.cargado = true;
+    };
+
+    const cbError = error => {
+      this.alertaService.hideLoading();
+      console.log(error);
+    };
+
+    this.clashProvider.battleLog(this.tagPlayer).subscribe(cbOK, cbError);
   }
 
 }

@@ -11,7 +11,7 @@ import { catchError } from 'rxjs/operators';
 export class ClashService {
 
   private endpoint = '';
-  private proxyURL = _.get(ENDPOINTS, 'PROXY.GET_PROXY_URL', '');
+  private proxyURL = _.get(ENDPOINTS, 'PROXY.PROXY_URL', '');
 
   constructor( private http: HttpClient ) { }
 
@@ -29,7 +29,7 @@ export class ClashService {
   }
 
   public getInfoJugador(tag: string): Observable<any> {
-    this.endpoint = _.get(ENDPOINTS, 'PLAYER.GET_INFO', '');
+    this.endpoint = _.get(ENDPOINTS, 'PLAYER.INFO', '');
     this.endpoint = _.replace(this.endpoint, '{playerTag}', tag);
     const finalProxyURL = _.replace(this.proxyURL, '{url}', this.endpoint);
 
@@ -38,7 +38,7 @@ export class ClashService {
   }
 
   public getClanInfo(clanTag: string): Observable<any> {
-    this.endpoint = _.get(ENDPOINTS, 'CLAN.GET_INFO', '');
+    this.endpoint = _.get(ENDPOINTS, 'CLAN.INFO', '');
     this.endpoint = _.replace(this.endpoint, '{clanTag}', clanTag);
     const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
 
@@ -47,7 +47,7 @@ export class ClashService {
   }
 
   public getIncomingChests(tag: string): Observable<any> {
-    this.endpoint = _.get(ENDPOINTS, 'PLAYER.GET_INCOMING_CHESTS', '');
+    this.endpoint = _.get(ENDPOINTS, 'PLAYER.INCOMING_CHESTS', '');
     this.endpoint = _.replace(this.endpoint, '{playerTag}', tag);
     const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
 
@@ -56,7 +56,7 @@ export class ClashService {
   }
 
   public getWarInfo(clanTag: string): Observable<any> {
-    this.endpoint = _.get(ENDPOINTS, 'CLAN.GET_CURRENT_WAR', '');
+    this.endpoint = _.get(ENDPOINTS, 'CLAN.CURRENT_WAR', '');
     this.endpoint = _.replace(this.endpoint, '{clanTag}', clanTag);
     const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
 
@@ -68,6 +68,15 @@ export class ClashService {
     this.endpoint = _.get(ENDPOINTS, 'UPDATE.URL', '');
 
     return this.http.get(this.endpoint)
+      .pipe(catchError(this.cbFailure));
+  }
+
+  public battleLog(tag: string): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'PLAYER.BATTLE_LOG', '');
+    this.endpoint = _.replace(this.endpoint, '{playerTag}', tag);
+    const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
+
+    return this.http.get(finalProxyUrl)
       .pipe(catchError(this.cbFailure));
   }
 }

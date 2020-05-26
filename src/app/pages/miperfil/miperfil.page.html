@@ -8,194 +8,375 @@
                 <ion-icon name="refresh"></ion-icon>
             </ion-button>
         </ion-buttons>
-        <ion-title>{{titulo}}</ion-title>
+        <ion-segment [(ngModel)]="perfilSegment" (ionChange)="changeSegment()">
+            <ion-segment-button value="playerInfo">
+                <ion-icon name="information-circle-outline"></ion-icon>
+                <ion-label>Info</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="playerBattles">
+                <ion-icon name="analytics-outline"></ion-icon>
+                <ion-label>Batallas</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+
     </ion-toolbar>
 </ion-header>
 
-<ion-content>
-    <ion-card>
-        <ion-item color="light" lines="full">
-            <ion-label>Arena</ion-label>
-        </ion-item>
-        <ion-card-content class="ion-text-center">
-            <ion-item lines="none">
-                <ion-thumbnail slot="start">
-                    <img src="../../../assets/arenas/{{infoPlayer.arena.id}}.png">
-                </ion-thumbnail>
-                <ion-label>
-                    <h1>
-                        {{infoPlayer.arena.name}}
-                    </h1>
-                </ion-label>
-            </ion-item>
-        </ion-card-content>
-    </ion-card>
-    <ion-card>
-        <ion-item color="light" lines="full">
-            <ion-label>Status</ion-label>
-        </ion-item>
-        <ion-list>
-            <ion-item>
-                <ion-label>Tag</ion-label>
-                <ion-badge slot="end" color="light">{{infoPlayer.tag}}</ion-badge>
-            </ion-item>
-            <ion-item>
-                <ion-label>Nivel de Exp</ion-label>
-                <ion-avatar slot="end">
+<ion-content #contentArea [ngSwitch]="perfilSegment">
+    <section *ngSwitchCase="'playerInfo'">
+        <ion-card>
+            <ion-item color="light" lines="full">
+                <ion-avatar slot="start">
                     <img src="../../../assets/exp-levels/{{infoPlayer.expLevel}}.png">
                 </ion-avatar>
+                <ion-label>
+                    {{infoPlayer.name}}
+                    <h4>
+                        {{infoPlayer.tag}}
+                    </h4>
+                </ion-label>
             </ion-item>
-            <ion-item>
-                <ion-label>Coronas</ion-label>
-                <ion-badge slot="end">{{infoPlayer.trophies}}</ion-badge>
+            <ion-list>
+                <ion-item lines="none">
+                    <ion-thumbnail slot="start">
+                        <img src="../../../assets/arenas/{{infoPlayer.arena.id}}.png">
+                    </ion-thumbnail>
+                    <ion-badge slot="end">
+                        {{infoPlayer.arena.name}}
+                    </ion-badge>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-thumbnail slot="start">
+                        <img src="../../../assets/ui-icons/trophies.png">
+                    </ion-thumbnail>
+                    <ion-badge slot="end">
+                        {{infoPlayer.trophies}}
+                    </ion-badge>
+                </ion-item>
+                <ion-item lines="none" *ngIf="existeClan">
+                    <ion-thumbnail slot="start">
+                        <img class="badge" src="../../../assets/badges/{{infoPlayer.clan.badgeId}}.png">
+                    </ion-thumbnail>
+                    <ion-badge slot="end">
+                        {{infoPlayer.clan.name}}
+                    </ion-badge>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <ion-card>
+            <ion-item color="light" lines="full">
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/ui-icons/cards.png">
+                </ion-thumbnail>
+                <ion-label>Mazo</ion-label>
+            </ion-item>
+            <ion-grid class="ion-text-center">
+                <ion-row>
+                    <ion-col id="notification-button" size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[0].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[0].name | goldencard: infoPlayer.currentDeck[0].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[0].level | modlevel: infoPlayer.currentDeck[0].maxLevel}}</ion-badge>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[1].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[1].name | goldencard: infoPlayer.currentDeck[1].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[1].level | modlevel: infoPlayer.currentDeck[1].maxLevel}}</ion-badge>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[2].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[2].name | goldencard: infoPlayer.currentDeck[2].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[2].level | modlevel: infoPlayer.currentDeck[2].maxLevel}}</ion-badge>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[3].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[3].name | goldencard: infoPlayer.currentDeck[3].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[3].level | modlevel: infoPlayer.currentDeck[3].maxLevel}}</ion-badge>
+                    </ion-col>
+                </ion-row>
+                <ion-row>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[4].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[4].name | goldencard: infoPlayer.currentDeck[4].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[4].level | modlevel: infoPlayer.currentDeck[4].maxLevel}}</ion-badge>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[5].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[5].name | goldencard: infoPlayer.currentDeck[5].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[5].level | modlevel: infoPlayer.currentDeck[5].maxLevel}}</ion-badge>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[6].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[6].name | goldencard: infoPlayer.currentDeck[6].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[6].level | modlevel: infoPlayer.currentDeck[6].maxLevel}}</ion-badge>
+                    </ion-col>
+                    <ion-col size="3">
+                        <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[7].starLevel}}</ion-badge>
+                        <ion-img [src]="infoPlayer.currentDeck[7].name | goldencard: infoPlayer.currentDeck[7].starLevel"></ion-img>
+                        <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[7].level | modlevel: infoPlayer.currentDeck[7].maxLevel}}</ion-badge>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+            <ion-item color="light" lines="full">
+                <ion-label>Carta favorita actual</ion-label>
+            </ion-item>
+            <ion-grid class="ion-text-center">
+                <ion-row>
+                    <ion-col size="4">
+
+                    </ion-col>
+                    <ion-col size="4">
+                        <ion-img [src]="infoPlayer.currentFavouriteCard.iconUrls.medium"></ion-img>
+                    </ion-col>
+                    <ion-col size="4">
+
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card>
+        <ion-card>
+            <ion-item color="light" lines="full">
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/ui-icons/legendary-chest-open.png">
+                </ion-thumbnail>
+                <ion-label>Cofres a obtener</ion-label>
+            </ion-item>
+            <ion-slides pager="false" [options]="slideOpts">
+                <ion-slide *ngFor="let cofre of chestInfo.items">
+                    <ion-grid class="ion-text-center">
+                        <ion-row>
+                            <ion-col>
+                                <img [src]="cofre.name | cofres">
+                            </ion-col>
+                        </ion-row>
+                        <ion-row>
+                            <ion-col>
+                                <ion-chip outline="true" color="tertiary">
+                                    <ion-icon name="add-outline"></ion-icon>
+                                    <ion-label>
+                                        {{cofre.index + 1}}
+                                    </ion-label>
+                                </ion-chip>
+                            </ion-col>
+                        </ion-row>
+                    </ion-grid>
+                </ion-slide>
+            </ion-slides>
+        </ion-card>
+        <ion-card>
+            <ion-item color="light" lines="full">
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/ui-icons/swords.png">
+                </ion-thumbnail>
+                <ion-label>Mis Batallas</ion-label>
+            </ion-item>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Victorias</ion-label>
+                    <ion-badge slot="end" color="warning">{{infoPlayer.wins}}</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Derrotas</ion-label>
+                    <ion-badge slot="end" color="danger">{{infoPlayer.losses}}</ion-badge>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>Vic. 3 coronas</ion-label>
+                    <ion-badge slot="end" color="success">{{infoPlayer.threeCrownWins}}</ion-badge>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <ion-card *ngIf="infoPlayer.leagueStatistics">
+            <ion-item color="light" lines=full>
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/ui-icons/grand.png">
+                </ion-thumbnail>
+                <ion-label>Estadísticas de Liga</ion-label>
+            </ion-item>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Mejor temporada</ion-label>
+                    <ion-badge slot="end" color="warning">{{infoPlayer.leagueStatistics.bestSeason.trophies}}</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Temporada anterior</ion-label>
+                    <ion-badge slot="end" color="tertiary">{{infoPlayer.leagueStatistics.previousSeason.trophies}}</ion-badge>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>Temporada actual</ion-label>
+                    <ion-badge slot="end" color="dark">{{infoPlayer.leagueStatistics.currentSeason.trophies}}</ion-badge>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+        <ion-card>
+            <ion-item color="light" lines=full>
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/ui-icons/book.png">
+                </ion-thumbnail>
+                <ion-label>Otros</ion-label>
+            </ion-item>
+            <ion-list>
+                <ion-item>
+                    <ion-label>Cartas colecc. al clan</ion-label>
+                    <ion-badge slot="end" color="light">{{infoPlayer.clanCardsCollected}}</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Donaciones</ion-label>
+                    <ion-badge slot="end" color="light">{{infoPlayer.donations}}</ion-badge>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Donaciones recibidas</ion-label>
+                    <ion-badge slot="end" color="light">{{infoPlayer.donationsReceived}}</ion-badge>
+                </ion-item>
+                <ion-item lines="none">
+                    <ion-label>Donaciones totales</ion-label>
+                    <ion-badge slot="end" color="light">{{infoPlayer.totalDonations}}</ion-badge>
+                </ion-item>
+            </ion-list>
+        </ion-card>
+    </section>
+    <section *ngSwitchCase="'playerBattles'">
+        <ion-card *ngIf="cargado">
+            <ion-item color="tertiary" lines="full">
+                <ion-label slot="start">
+                    <h2>
+                        {{battleInfo[0].team[0].name}}
+                    </h2>
+                    <ion-chip>
+                        <ion-avatar>
+                            <img src="../../../assets/badges/{{battleInfo[0].team[0].clan.badgeId}}.png">
+                        </ion-avatar>
+                        <ion-label>
+                            {{battleInfo[0].team[0].clan.name}}
+                        </ion-label>
+                    </ion-chip>
+                </ion-label>
             </ion-item>
             <ion-item lines="none">
-                <ion-label>Puntos Estelares</ion-label>
-                <ion-badge slot="end" color="warning">{{infoPlayer.starPoints}}</ion-badge>
+                <ion-chip>
+                    <ion-avatar>
+                        <img src="../../../assets/ui-icons/trophies.png">
+                    </ion-avatar>
+                    <ion-label>
+                        {{battleInfo[0].team[0].startingTrophies}}
+                    </ion-label>
+                </ion-chip>
+                <ion-chip>
+                    <ion-avatar>
+                        <img src="../../../assets/ui-icons/crown-blue.png">
+                    </ion-avatar>
+                    <ion-label>
+                        {{battleInfo[0].team[0].trophyChange}}
+                    </ion-label>
+                </ion-chip>
             </ion-item>
-        </ion-list>
-    </ion-card>
-    <ion-card>
-        <ion-item color="light" lines="full">
-            <ion-label>Mazo</ion-label>
-        </ion-item>
-        <ion-grid class="ion-text-center">
-            <ion-row>
-                <ion-col id="notification-button" size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[0].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[0].name | goldencard: infoPlayer.currentDeck[0].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[0].level | modlevel: infoPlayer.currentDeck[0].maxLevel}}</ion-badge>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[1].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[1].name | goldencard: infoPlayer.currentDeck[1].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[1].level | modlevel: infoPlayer.currentDeck[1].maxLevel}}</ion-badge>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[2].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[2].name | goldencard: infoPlayer.currentDeck[2].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[2].level | modlevel: infoPlayer.currentDeck[2].maxLevel}}</ion-badge>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[3].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[3].name | goldencard: infoPlayer.currentDeck[3].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[3].level | modlevel: infoPlayer.currentDeck[3].maxLevel}}</ion-badge>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[4].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[4].name | goldencard: infoPlayer.currentDeck[4].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[4].level | modlevel: infoPlayer.currentDeck[4].maxLevel}}</ion-badge>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[5].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[5].name | goldencard: infoPlayer.currentDeck[5].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[5].level | modlevel: infoPlayer.currentDeck[5].maxLevel}}</ion-badge>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[6].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[6].name | goldencard: infoPlayer.currentDeck[6].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[6].level | modlevel: infoPlayer.currentDeck[6].maxLevel}}</ion-badge>
-                </ion-col>
-                <ion-col size="3">
-                    <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[7].starLevel}}</ion-badge>
-                    <ion-img [src]="infoPlayer.currentDeck[7].name | goldencard: infoPlayer.currentDeck[7].starLevel"></ion-img>
-                    <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[7].level | modlevel: infoPlayer.currentDeck[7].maxLevel}}</ion-badge>
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-        <ion-item color="light" lines="full">
-            <ion-label>Carta favorita actual</ion-label>
-        </ion-item>
-        <ion-grid class="ion-text-center">
-            <ion-row>
-                <ion-col size="4">
-
-                </ion-col>
-                <ion-col size="4">
-                    <ion-img [src]="infoPlayer.currentFavouriteCard.iconUrls.medium"></ion-img>
-                </ion-col>
-                <ion-col size="4">
-
-                </ion-col>
-            </ion-row>
-        </ion-grid>
-    </ion-card>
-    <ion-card>
-        <ion-item color="light" lines="full">
-            <ion-label>Cofres a obtener</ion-label>
-        </ion-item>
-        <ion-slides pager="false" [options]="slideOpts">
-            <ion-slide *ngFor="let cofre of chestInfo.items">
+            <ion-item lines="none">
                 <ion-grid class="ion-text-center">
                     <ion-row>
-                        <ion-col>
-                            <img [src]="cofre.name | cofres">
+                        <ion-col id="notification-button" size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[0].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[0].name | goldencard: infoPlayer.currentDeck[0].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[0].level | modlevel: infoPlayer.currentDeck[0].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[1].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[1].name | goldencard: infoPlayer.currentDeck[1].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[1].level | modlevel: infoPlayer.currentDeck[1].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[2].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[2].name | goldencard: infoPlayer.currentDeck[2].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[2].level | modlevel: infoPlayer.currentDeck[2].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[3].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[3].name | goldencard: infoPlayer.currentDeck[3].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[3].level | modlevel: infoPlayer.currentDeck[3].maxLevel}}</ion-badge>
                         </ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-col>
-                            <ion-chip outline="true" color="tertiary">
-                                <ion-icon name="add-outline"></ion-icon>
-                                <ion-label>
-                                    {{cofre.index + 1}}
-                                </ion-label>
-                            </ion-chip>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[4].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[4].name | goldencard: infoPlayer.currentDeck[4].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[4].level | modlevel: infoPlayer.currentDeck[4].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[5].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[5].name | goldencard: infoPlayer.currentDeck[5].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[5].level | modlevel: infoPlayer.currentDeck[5].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[6].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[6].name | goldencard: infoPlayer.currentDeck[6].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[6].level | modlevel: infoPlayer.currentDeck[6].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[7].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[7].name | goldencard: infoPlayer.currentDeck[7].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[7].level | modlevel: infoPlayer.currentDeck[7].maxLevel}}</ion-badge>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-            </ion-slide>
-        </ion-slides>
-    </ion-card>
-    <ion-card>
-        <ion-item color="light" lines="full">
-            <ion-label>Mis Batallas</ion-label>
-        </ion-item>
-        <ion-card-content>
-            <canvas #battlesChart></canvas>
-        </ion-card-content>
-    </ion-card>
-    <ion-card *ngIf="infoPlayer.leagueStatistics">
-        <ion-item color="light" lines=full>
-            <ion-label>Estadísticas de Liga</ion-label>
-        </ion-item>
-        <ion-list>
-            <ion-item>
-                <ion-label>Mejor temporada</ion-label>
-                <ion-badge slot="end" color="warning">{{infoPlayer.leagueStatistics.bestSeason.trophies}}</ion-badge>
+
             </ion-item>
-            <ion-item>
-                <ion-label>Temporada anterior</ion-label>
-                <ion-badge slot="end" color="tertiary">{{infoPlayer.leagueStatistics.previousSeason.trophies}}</ion-badge>
-            </ion-item>
+            <ion-card-content class="ion-text-center">
+                <ion-badge color="dark">v/s</ion-badge>
+            </ion-card-content>
             <ion-item lines="none">
-                <ion-label>Temporada actual</ion-label>
-                <ion-badge slot="end" color="dark">{{infoPlayer.leagueStatistics.currentSeason.trophies}}</ion-badge>
+                <ion-grid class="ion-text-center">
+                    <ion-row>
+                        <ion-col id="notification-button" size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[0].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[0].name | goldencard: infoPlayer.currentDeck[0].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[0].level | modlevel: infoPlayer.currentDeck[0].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[1].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[1].name | goldencard: infoPlayer.currentDeck[1].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[1].level | modlevel: infoPlayer.currentDeck[1].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[2].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[2].name | goldencard: infoPlayer.currentDeck[2].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[2].level | modlevel: infoPlayer.currentDeck[2].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[3].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[3].name | goldencard: infoPlayer.currentDeck[3].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[3].level | modlevel: infoPlayer.currentDeck[3].maxLevel}}</ion-badge>
+                        </ion-col>
+                    </ion-row>
+                    <ion-row>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[4].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[4].name | goldencard: infoPlayer.currentDeck[4].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[4].level | modlevel: infoPlayer.currentDeck[4].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[5].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[5].name | goldencard: infoPlayer.currentDeck[5].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[5].level | modlevel: infoPlayer.currentDeck[5].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[6].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[6].name | goldencard: infoPlayer.currentDeck[6].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[6].level | modlevel: infoPlayer.currentDeck[6].maxLevel}}</ion-badge>
+                        </ion-col>
+                        <ion-col size="3">
+                            <ion-badge id="startlevel-badge-start" color="warning">{{infoPlayer.currentDeck[7].starLevel}}</ion-badge>
+                            <ion-img [src]="infoPlayer.currentDeck[7].name | goldencard: infoPlayer.currentDeck[7].starLevel"></ion-img>
+                            <ion-badge id="levelinfo-badge-end" color="danger">{{infoPlayer.currentDeck[7].level | modlevel: infoPlayer.currentDeck[7].maxLevel}}</ion-badge>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
+
             </ion-item>
-        </ion-list>
-    </ion-card>
-    <ion-card>
-        <ion-item color="light" lines=full>
-            <ion-label>Otros</ion-label>
-        </ion-item>
-        <ion-list>
-            <ion-item>
-                <ion-label>Cartas colecc. al clan</ion-label>
-                <ion-badge slot="end" color="light">{{infoPlayer.clanCardsCollected}}</ion-badge>
+            <ion-item color="tertiary" lines="full">
+                <ion-label slot="end">{{battleInfo[0].opponent[0].name}}</ion-label>
+                <ion-thumbnail slot="end">
+                    <img class="badge" src="../../../assets/badges/{{battleInfo[0].opponent[0].clan.badgeId}}.png">
+                </ion-thumbnail>
             </ion-item>
-            <ion-item>
-                <ion-label>Donaciones</ion-label>
-                <ion-badge slot="end" color="light">{{infoPlayer.donations}}</ion-badge>
-            </ion-item>
-            <ion-item>
-                <ion-label>Donaciones recibidas</ion-label>
-                <ion-badge slot="end" color="light">{{infoPlayer.donationsReceived}}</ion-badge>
-            </ion-item>
-            <ion-item lines="none">
-                <ion-label>Donaciones totales</ion-label>
-                <ion-badge slot="end" color="light">{{infoPlayer.totalDonations}}</ion-badge>
-            </ion-item>
-        </ion-list>
-    </ion-card>
+
+        </ion-card>
+    </section>
+
 </ion-content>

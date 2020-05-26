@@ -38,7 +38,7 @@
                 </ion-avatar>
                 <ion-label>
                     <h2><strong>{{resultados.playerInfo.name}}</strong></h2>
-                    <p>{{resultados.playerInfo.clan.name}}</p>
+                    <p *ngIf="resultados.clanTagValid">{{resultados.playerInfo.clan.name}}</p>
                 </ion-label>
             </ion-item>
             <ion-item>

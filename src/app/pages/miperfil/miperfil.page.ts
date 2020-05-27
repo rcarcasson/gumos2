@@ -25,20 +25,12 @@ export class MiperfilPage implements OnInit {
   public battleInfo: BattleLog[];
   public titulo = 'Mi Perfil';
   private tagPlayer = '';
-  public perfilSegment = 'playerBattles';
+  public perfilSegment = 'playerInfo';
   public existeClan = true;
   public cargado = false;
 
   slideOpts = {
     slidesPerView: 3.3,
-    freeMode: true,
-    zoom: {
-      toggle: false
-    }
-  };
-
-  slideOpts2 = {
-    slidesPerView: 1,
     freeMode: true,
     zoom: {
       toggle: false
@@ -124,11 +116,7 @@ export class MiperfilPage implements OnInit {
   changeSegment() {
     this.contentArea.scrollToTop(500);
     if (this.perfilSegment === 'playerBattles') {
-      if (_.isEmpty(this.battleInfo)) {
         this.battleLog();
-      } else {
-        console.log(this.battleInfo);
-      }
     }
   }
 

@@ -25,24 +25,32 @@
                 </h4>
             </ion-label>
         </ion-item>
-        <ion-card-content class="ion-text-center">
+        <ion-list>
             <ion-item lines="none">
                 <ion-thumbnail slot="start">
                     <img src="../../../../assets/arenas/{{infoPlayer.arena.id}}.png">
                 </ion-thumbnail>
-                <ion-label>
-                    <h1>
-                        {{infoPlayer.arena.name}}
-                    </h1>
-                </ion-label>
-                <ion-thumbnail slot="end">
-                    <img src="../../../../assets/ui-icons/trophies.png">
-                </ion-thumbnail>
-                <ion-label slot="end">
-                    <h1>{{infoPlayer.trophies}}</h1>
-                </ion-label>
+                <ion-badge slot="end">
+                    {{infoPlayer.arena.name}}
+                </ion-badge>
             </ion-item>
-        </ion-card-content>
+            <ion-item lines="none">
+                <ion-thumbnail slot="start">
+                    <img src="../../../assets/ui-icons/trophies.png">
+                </ion-thumbnail>
+                <ion-badge slot="end">
+                    {{infoPlayer.trophies}}
+                </ion-badge>
+            </ion-item>
+            <ion-item lines="none" *ngIf="existeClan">
+                <ion-thumbnail slot="start">
+                    <img class="badge" src="../../../assets/badges/{{infoPlayer.clan.badgeId}}.png">
+                </ion-thumbnail>
+                <ion-badge slot="end">
+                    {{infoPlayer.clan.name}}
+                </ion-badge>
+            </ion-item>
+        </ion-list>
     </ion-card>
     <ion-card>
         <ion-item color="light" lines="full">
@@ -150,9 +158,20 @@
             </ion-thumbnail>
             <ion-label>Batallas</ion-label>
         </ion-item>
-        <ion-card-content>
-            <canvas #battlesChart></canvas>
-        </ion-card-content>
+        <ion-list>
+            <ion-item>
+                <ion-label>Victorias</ion-label>
+                <ion-badge slot="end" color="warning">{{infoPlayer.wins}}</ion-badge>
+            </ion-item>
+            <ion-item>
+                <ion-label>Derrotas</ion-label>
+                <ion-badge slot="end" color="danger">{{infoPlayer.losses}}</ion-badge>
+            </ion-item>
+            <ion-item lines="none">
+                <ion-label>Vic. 3 coronas</ion-label>
+                <ion-badge slot="end" color="success">{{infoPlayer.threeCrownWins}}</ion-badge>
+            </ion-item>
+        </ion-list>
     </ion-card>
     <ion-card *ngIf="infoPlayer.leagueStatistics">
         <ion-item color="light" lines=full>

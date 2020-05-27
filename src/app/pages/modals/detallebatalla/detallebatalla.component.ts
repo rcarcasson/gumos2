@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-detallebatalla',
@@ -8,14 +9,14 @@ import { Component, OnInit, Input } from '@angular/core';
 export class DetallebatallaComponent implements OnInit {
   @Input() battleInfo;
 
-  constructor() { }
+  constructor(private modalController: ModalController) { }
 
   ngOnInit() {
     console.log(this.battleInfo);
   }
 
   cerrar() {
-    
+    this.modalController.dismiss();
   }
 
 }

@@ -19,6 +19,7 @@ export class PerfilComponent implements OnInit {
 
   public titulo = 'Mi Perfil';
   public corazon = 'heart-outline';
+  public existeClan = true;
 
   slideOpts = {
     slidesPerView: 3.3,
@@ -35,35 +36,39 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit() {
     this.titulo = _.get(this.infoPlayer, 'name');
+    if (_.get(this.infoPlayer, 'clan', '') === '') {
+      this.existeClan = false;
+    }
     if (this.checkFavorite()) {
       this.corazon = 'heart';
     }
   }
 
-  ionViewDidEnter() {
-    this.graficoBatallas();
-  }
+  // ionViewDidEnter() {
+  //   this.graficoBatallas();
+  // }
 
-  graficoBatallas() {
-    const myPieChart = new Chart(this.battlesChart.nativeElement, {
-      type: 'pie',
-      data: {
-        // tslint:disable-next-line: max-line-length
-        labels: ['Victorias: ' + this.infoPlayer.wins, 'Derrotas: ' + this.infoPlayer.losses, 'Vic. 3 coronas: ' + this.infoPlayer.threeCrownWins],
-        datasets: [{
-          label: 'Batallas',
-          data: [
-            this.infoPlayer.wins, this.infoPlayer.losses, this.infoPlayer.threeCrownWins
-          ],
-          backgroundColor: [
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 99, 132, 1)',
-            'rgba(255, 206, 86, 1)'
-          ]
-        }]
-      }
-    });
-  }
+  // graficoBatallas() {
+  //   const myPieChart = new Chart(this.battlesChart.nativeElement, {
+  //     type: 'pie',
+  //     data: {
+  //       // tslint:disable-next-line: max-line-length
+  // tslint:disable-next-line: max-line-length
+  //       labels: ['Victorias: ' + this.infoPlayer.wins, 'Derrotas: ' + this.infoPlayer.losses, 'Vic. 3 coronas: ' + this.infoPlayer.threeCrownWins],
+  //       datasets: [{
+  //         label: 'Batallas',
+  //         data: [
+  //           this.infoPlayer.wins, this.infoPlayer.losses, this.infoPlayer.threeCrownWins
+  //         ],
+  //         backgroundColor: [
+  //           'rgba(54, 162, 235, 1)',
+  //           'rgba(255, 99, 132, 1)',
+  //           'rgba(255, 206, 86, 1)'
+  //         ]
+  //       }]
+  //     }
+  //   });
+  // }
 
   cerrar() {
     this.modalController.dismiss();

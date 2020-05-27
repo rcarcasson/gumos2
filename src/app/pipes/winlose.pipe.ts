@@ -5,8 +5,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class WinlosePipe implements PipeTransform {
 
-  transform(value: number): string {
-    if (value < 0) {
+  transform(jugador: number, oponente: number): string {
+    if (jugador < oponente) {
       return 'danger';
     } else {
       return 'success';

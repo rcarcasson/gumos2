@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { PerfilComponent } from './perfil/perfil.component';
 import _ from 'lodash';
+import { DetallebatallaComponent } from './detallebatalla/detallebatalla.component';
 
 @Injectable({
     providedIn: 'root'
@@ -21,6 +22,16 @@ export class ModalProvider {
             component: PerfilComponent
         });
 
+        return modal;
+    }
+
+    async detalleBatalla(data: any) {
+        const modal = await this.modalCtrl.create({
+            componentProps: {
+                battleInfo: data
+            },
+            component: DetallebatallaComponent
+        });
         return modal;
     }
 }

@@ -14,6 +14,7 @@ import { ClashService } from './providers/clashservice.service';
 import { MiclanPageModule } from './pages/miclan/miclan.module';
 import { PipesModule } from './pipes/pipes.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+import { MiperfilPageModule } from './pages/miperfil/miperfil.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,7 +24,8 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
     HttpClientModule,
     PipesModule,
     AppRoutingModule,
-    MiclanPageModule
+    MiclanPageModule,
+    MiperfilPageModule
   ],
   providers: [
     StatusBar,

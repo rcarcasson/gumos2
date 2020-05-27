@@ -8,6 +8,8 @@ import { MiperfilPageRoutingModule } from './miperfil-routing.module';
 
 import { MiperfilPage } from './miperfil.page';
 import { PipesModule } from '../../pipes/pipes.module';
+import { DetallebatallaComponent } from '../modals/detallebatalla/detallebatalla.component';
+import { ModalsModule } from '../modals/modals.module';
 
 @NgModule({
   imports: [
@@ -15,8 +17,10 @@ import { PipesModule } from '../../pipes/pipes.module';
     FormsModule,
     IonicModule,
     MiperfilPageRoutingModule,
-    PipesModule
+    PipesModule,
+    ModalsModule
   ],
-  declarations: [MiperfilPage]
+  declarations: [MiperfilPage],
+  entryComponents: [DetallebatallaComponent]
 })
 export class MiperfilPageModule {}

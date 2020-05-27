@@ -3,12 +3,14 @@ import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
+import { DetallebatallaComponent } from './detallebatalla/detallebatalla.component';
 
 
 @NgModule({
-  declarations: [PerfilComponent],
+  declarations: [PerfilComponent, DetallebatallaComponent],
   exports: [
-    PerfilComponent
+    PerfilComponent,
+    DetallebatallaComponent
   ],
   imports: [
     CommonModule,

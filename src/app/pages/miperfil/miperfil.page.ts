@@ -9,6 +9,7 @@ import { ClashProvider } from 'src/app/providers/clashservice.provider';
 import { ConvertChest, ChestInfo } from 'src/app/models/inc-chest.model';
 import { NavController, IonContent } from '@ionic/angular';
 import { BattleLog, ConvertBattle } from 'src/app/models/battlelog.model';
+import { ModalProvider } from '../modals/modal.provider';
 
 @Component({
   selector: 'app-miperfil',
@@ -36,11 +37,20 @@ export class MiperfilPage implements OnInit {
     }
   };
 
+  slideOpts2 = {
+    slidesPerView: 1,
+    freeMode: true,
+    zoom: {
+      toggle: false
+    }
+  };
+
   constructor(
     private storageService: StorageService,
     private alertaService: AlertasService,
     private clashProvider: ClashProvider,
-    private navController: NavController
+    private navController: NavController,
+    private modalProvider: ModalProvider
   ) { }
 
   ngOnInit() {
@@ -137,6 +147,12 @@ export class MiperfilPage implements OnInit {
     };
 
     this.clashProvider.battleLog(this.tagPlayer).subscribe(cbOK, cbError);
+  }
+
+  async detalles(indice: any) {
+    console.log(indice);
+    const modal = await this.modalProvider.detalleBatalla(indice);
+    return modal.present();
   }
 
 }

@@ -1,0 +1,57 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-segment [(ngModel)]="rankSegment" (ionChange)="changeSegment()">
+            <ion-segment-button value="playersRank">
+                <ion-icon name="people-circle-outline"></ion-icon>
+                <ion-label>Jugadores</ion-label>
+            </ion-segment-button>
+            <ion-segment-button value="clansRank">
+                <ion-icon name="skull-outline"></ion-icon>
+                <ion-label>Clanes</ion-label>
+            </ion-segment-button>
+        </ion-segment>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content [ngSwitch]="rankSegment">
+    <section *ngSwitchCase="'playersRank'">
+        <ion-list lines="none" *ngIf="!cargando">
+            <ion-item *ngFor="let jugador of topJugadores2" button (click)="mostrar(jugador.tag)" detail>
+                <ion-badge>{{jugador.rank}}</ion-badge>
+                <ion-badge color="danger">{{jugador.previousRank}}</ion-badge>
+                <ion-label>{{jugador.name}}</ion-label>
+                <ion-chip slot="end" color="secondary">
+                    <ion-avatar>
+                        <img src="../../../assets/ui-icons/trophies.png">
+                    </ion-avatar>
+                    <ion-label>
+                        {{jugador.trophies}}
+                    </ion-label>
+                </ion-chip>
+            </ion-item>
+        </ion-list>
+    </section>
+    <section *ngSwitchCase="'clansRank'">
+        <ion-list lines="none" *ngIf="!cargando">
+            <ion-item *ngFor="let clan of topClanes2" button (click)="mostrar(clan.tag)" detail>
+                <ion-badge>{{clan.rank}}</ion-badge>
+                <ion-badge color="danger">{{clan.previousRank}}</ion-badge>
+                <ion-label>{{clan.name}}</ion-label>
+                <ion-chip slot="end" color="secondary">
+                    <ion-avatar>
+                        <img src="../../../assets/ui-icons/trophies.png">
+                    </ion-avatar>
+                    <ion-label>
+                        {{clan.clanScore}}
+                    </ion-label>
+                </ion-chip>
+            </ion-item>
+        </ion-list>
+    </section>
+    <ion-infinite-scroll threshold="300px" (ionInfinite)="isPlayersView ? cargarDatosJugadores($event) : cargarDatosClanes($event)">
+        <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando..."></ion-infinite-scroll-content>
+    </ion-infinite-scroll>
+</ion-content>

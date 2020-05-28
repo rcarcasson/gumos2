@@ -4,13 +4,19 @@ import { IonicModule } from '@ionic/angular';
 import { PerfilComponent } from './perfil/perfil.component';
 import { PipesModule } from 'src/app/pipes/pipes.module';
 import { DetallebatallaComponent } from './detallebatalla/detallebatalla.component';
+import { ChangelogComponent } from './changelog/changelog.component';
 
 
 @NgModule({
-  declarations: [PerfilComponent, DetallebatallaComponent],
+  declarations: [
+    PerfilComponent,
+    DetallebatallaComponent,
+    ChangelogComponent
+  ],
   exports: [
     PerfilComponent,
-    DetallebatallaComponent
+    DetallebatallaComponent,
+    ChangelogComponent
   ],
   imports: [
     CommonModule,

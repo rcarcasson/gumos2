@@ -3,6 +3,7 @@ import { ModalController } from '@ionic/angular';
 import { PerfilComponent } from './perfil/perfil.component';
 import _ from 'lodash';
 import { DetallebatallaComponent } from './detallebatalla/detallebatalla.component';
+import { ChangelogComponent } from './changelog/changelog.component';
 
 @Injectable({
     providedIn: 'root'
@@ -31,6 +32,13 @@ export class ModalProvider {
                 battleInfo: data
             },
             component: DetallebatallaComponent
+        });
+        return modal;
+    }
+
+    async notasVersion() {
+        const modal = await this.modalCtrl.create({
+            component: ChangelogComponent
         });
         return modal;
     }

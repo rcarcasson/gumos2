@@ -15,6 +15,8 @@ import { MiclanPageModule } from './pages/miclan/miclan.module';
 import { PipesModule } from './pipes/pipes.module';
 import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 import { MiperfilPageModule } from './pages/miperfil/miperfil.module';
+import { ModalsModule } from './pages/modals/modals.module';
+import { ChangelogComponent } from './pages/modals/changelog/changelog.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +27,8 @@ import { MiperfilPageModule } from './pages/miperfil/miperfil.module';
     PipesModule,
     AppRoutingModule,
     MiclanPageModule,
-    MiperfilPageModule
+    MiperfilPageModule,
+    ModalsModule
   ],
   providers: [
     StatusBar,
@@ -34,6 +37,9 @@ import { MiperfilPageModule } from './pages/miperfil/miperfil.module';
     ClashService,
     InAppBrowser,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  entryComponents: [
+    ChangelogComponent
   ],
   bootstrap: [AppComponent]
 })

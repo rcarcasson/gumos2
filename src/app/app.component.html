@@ -12,6 +12,10 @@
                             <ion-label>{{ p.title }}</ion-label>
                         </ion-item>
                     </ion-menu-toggle>
+                    <ion-item (click)="releaseNotes()" lines="none">
+                        <ion-icon slot="start" name="code-working-sharp"></ion-icon>
+                        <ion-label>Notas de Versión</ion-label>
+                    </ion-item>
                     <ion-item (click)="checkUpdate()" lines="none">
                         <ion-icon slot="start" name="reload-sharp"></ion-icon>
                         <ion-label>Actualizaciones...</ion-label>

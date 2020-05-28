@@ -6,6 +6,7 @@ import { ClashProvider } from 'src/app/providers/clashservice.provider';
 import { AlertasService } from './shared/alertas.service';
 import _ from 'lodash';
 import { CONST } from './constants/general.const';
+import { ModalProvider } from './pages/modals/modal.provider';
 
 @Component({
   selector: 'app-root',
@@ -33,6 +34,11 @@ export class AppComponent implements OnInit {
       icon: 'skull'
     },
     {
+      title: 'Ranking Chile',
+      url: 'ranking',
+      icon: 'trending-up'
+    },
+    {
       title: 'Favoritos',
       url: 'favoritos',
       icon: 'heart'
@@ -41,14 +47,15 @@ export class AppComponent implements OnInit {
       title: 'Configuración',
       url: 'settings',
       icon: 'settings'
-    },
+    }
   ];
 
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
     private clashProvider: ClashProvider,
-    private alertaService: AlertasService
+    private alertaService: AlertasService,
+    private modalProvider: ModalProvider
   ) {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     this.darkMode = prefersDark.matches;
@@ -66,11 +73,9 @@ export class AppComponent implements OnInit {
       localStorage.setItem('favPlayer', JSON.stringify([]));
     }
     this.appVer = _.get(CONST, 'GENERAL.VERSION');
-  }
-
-  ionViewDidEnter() {
-    if (this.platform.is('ios') || this.platform.is('android')) {
-      this.checkUpdate();
+    console.log(this.platform.platforms());
+    if (this.platform.is('android')) {
+      this.checkUpdate2();
     }
   }
 
@@ -108,4 +113,36 @@ export class AppComponent implements OnInit {
 
     this.clashProvider.checkUpdate(this.appVer).subscribe(cbOK, cbError);
   }
+
+  checkUpdate2() {
+
+    const cbOK = response => {
+      if (_.get(response, 'code', '') === 200) {
+        const alerta = {
+          title: 'Actualización disponible',
+          message: _.get(response, 'message', ''),
+          url: _.get(response, 'url', '')
+        };
+        this.alertaService.descargarUpdate(alerta);
+      }
+    };
+
+    const cbError = error => {
+      setTimeout(() => {
+        const alerta = {
+          title: 'Atención',
+          message: _.get(error, 'estado.glosaEstado')
+        };
+        this.alertaService.mostrarAlerta(alerta);
+      }, 250);
+    };
+
+    this.clashProvider.checkUpdate(this.appVer).subscribe(cbOK, cbError);
+  }
+
+  async releaseNotes() {
+    const modal = await this.modalProvider.notasVersion();
+    return modal.present();
+  }
+
 }

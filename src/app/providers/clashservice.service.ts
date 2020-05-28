@@ -79,4 +79,31 @@ export class ClashService {
     return this.http.get(finalProxyUrl)
       .pipe(catchError(this.cbFailure));
   }
+
+  public getLocations(): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'LOCATIONS.GET_LOCATIONS', '');
+    const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
+
+    return this.http.get(finalProxyUrl)
+      .pipe(catchError(this.cbFailure));
+  }
+
+  public getRankPlayers(idLocation: string): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'LOCATIONS.RANKING_PLAYERS', '');
+    this.endpoint = _.replace(this.endpoint, '{locationId}', idLocation);
+    const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
+
+    return this.http.get(finalProxyUrl)
+      .pipe(catchError(this.cbFailure));
+  }
+
+  public getRankClans(idLocation: string): Observable<any> {
+    this.endpoint = _.get(ENDPOINTS, 'LOCATIONS.RANKING_CLAN', '');
+    this.endpoint = _.replace(this.endpoint, '{locationId}', idLocation);
+    const finalProxyUrl = _.replace(this.proxyURL, '{url}', this.endpoint);
+
+    return this.http.get(finalProxyUrl)
+      .pipe(catchError(this.cbFailure));
+  }
+
 }

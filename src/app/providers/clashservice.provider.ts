@@ -222,4 +222,48 @@ export class ClashProvider {
             .pipe(map(cbOk))
             .pipe(catchError(cbError));
     }
+
+    public getLocations(): Observable<any> {
+        const cbOk = response => {
+            return response;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.getLocations()
+            .pipe(map(cbOk))
+            .pipe(catchError(cbError));
+    }
+
+    public getRankPlayers(idLocation: string): Observable<any> {
+        const cbOk = response => {
+            return response;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.getRankPlayers(idLocation)
+            .pipe(map(cbOk))
+            .pipe(catchError(cbError));
+    }
+
+    public getRankClans(idLocation: string): Observable<any> {
+        const cbOk = response => {
+            return response;
+        };
+
+        const cbError = error => {
+            return throwError(error);
+        };
+
+        return this.clashService.getRankClans(idLocation)
+            .pipe(map(cbOk))
+            .pipe(catchError(cbError));
+    }
+
 }
+

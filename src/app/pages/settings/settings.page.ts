@@ -74,7 +74,6 @@ export class SettingsPage implements OnInit {
 
   private procesarRespuestaConfig(data: any) {
     this.resultados = data;
-    console.log(this.resultados);
     this.mostrarResultados = true;
 
     if (this.resultados.playerTagValid) {

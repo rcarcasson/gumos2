@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { ClashProvider } from 'src/app/providers/clashservice.provider';
 import { AlertasService } from 'src/app/shared/alertas.service';
 import { Item } from 'src/app/models/rankplayers.model';
-import { IonInfiniteScroll } from '@ionic/angular';
+import { IonInfiniteScroll, NavController } from '@ionic/angular';
 import _ from 'lodash';
 import { ModalProvider } from '../modals/modal.provider';
 import { ItemClan } from 'src/app/models/rankclanes.model';
@@ -27,7 +27,8 @@ export class RankingPage implements OnInit {
   constructor(
     private clashProvider: ClashProvider,
     private alertaService: AlertasService,
-    private modalProvider: ModalProvider
+    private modalProvider: ModalProvider,
+    private navController: NavController
   ) { }
 
   ngOnInit() {
@@ -115,6 +116,27 @@ export class RankingPage implements OnInit {
 
     this.clashProvider.getInfoJugador(finalTag).subscribe(cbOk, cbError);
 
+  }
+
+  mostrarClan(clanTag: string) {
+    this.alertaService.showLoading('Obteniendo info...');
+    clanTag = clanTag.replace('#', '');
+
+    const cbOk = response => {
+      this.alertaService.hideLoading();
+      const info = {
+        infoClan: _.get(response, 'clanInfo'),
+        infoWar: _.get(response, 'clanWar')
+      };
+
+      this.navController.navigateForward('miclan', {queryParams: {otroClan: true, info }, animated: true});
+    };
+
+    const cbError = error => {
+      this.alertaService.hideLoading();
+    };
+
+    this.clashProvider.getClanInfo(clanTag).subscribe(cbOk, cbError);
   }
 
   changeSegment() {

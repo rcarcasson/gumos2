@@ -49,7 +49,7 @@ export class MiperfilPage implements OnInit {
 
     this.infoPlayer = Convert.toPlayerInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.PLAYER_KEY')));
     this.chestInfo = ConvertChest.toChestInfo(this.storageService.getDataSinParse(_.get(CONST, 'GENERAL.CHEST_KEY')));
-    if (this.infoPlayer !== null) {
+    if (this.infoPlayer !== null || _.get(this.infoPlayer, 'name', '') !== '') {
       this.titulo = this.infoPlayer.name;
       this.tagPlayer = _.replace(this.infoPlayer.tag, '#', '');
       if (_.get(this.infoPlayer, 'clan', '') === '') {
@@ -138,7 +138,6 @@ export class MiperfilPage implements OnInit {
   }
 
   async detalles(indice: any) {
-    console.log(indice);
     const modal = await this.modalProvider.detalleBatalla(indice);
     return modal.present();
   }

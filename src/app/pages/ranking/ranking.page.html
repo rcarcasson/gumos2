@@ -36,7 +36,7 @@
     </section>
     <section *ngSwitchCase="'clansRank'">
         <ion-list lines="none" *ngIf="!cargando">
-            <ion-item *ngFor="let clan of topClanes2" button (click)="mostrar(clan.tag)" detail>
+            <ion-item *ngFor="let clan of topClanes2" button (click)="mostrarClan(clan.tag)" detail class="animated fadeIn fast">
                 <ion-badge>{{clan.rank}}</ion-badge>
                 <ion-badge color="danger">{{clan.previousRank}}</ion-badge>
                 <ion-label>{{clan.name}}</ion-label>

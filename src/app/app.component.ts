@@ -73,7 +73,6 @@ export class AppComponent implements OnInit {
       localStorage.setItem('favPlayer', JSON.stringify([]));
     }
     this.appVer = _.get(CONST, 'GENERAL.VERSION');
-    console.log(this.platform.platforms());
     if (this.platform.is('android')) {
       this.checkUpdate2();
     }

@@ -1,7 +1,10 @@
 <ion-header>
     <ion-toolbar color="primary">
-        <ion-buttons slot="start">
+        <ion-buttons slot="start" *ngIf="!otroClan">
             <ion-menu-button></ion-menu-button>
+        </ion-buttons>
+        <ion-buttons slot="start" *ngIf='otroClan'>
+            <ion-back-button></ion-back-button>
         </ion-buttons>
         <ion-segment [(ngModel)]="clanSegment" (ionChange)="changeSegment()">
             <ion-segment-button value="clanInfo">
@@ -69,7 +72,7 @@
         </ion-card-content>
     </ion-card>
     <ion-list *ngSwitchCase="'clanMembers'">
-        <ion-item *ngFor="let miembro of infoClan.memberList" button (click)="mostrarPerfil(miembro.tag)" detail>
+        <ion-item *ngFor="let miembro of infoClan.memberList" button (click)="mostrarPerfil(miembro.tag)" detail class="animated fadeIn fast">
             <ion-thumbnail slot="start">
                 <img src="../../../../assets/arenas/{{miembro.arena.id}}.png">
             </ion-thumbnail>
@@ -83,12 +86,15 @@
         </ion-item>
     </ion-list>
     <section *ngSwitchCase="'clanWar'">
+        <ion-card>
+            <ion-item lines="none" color="light">
+                <ion-thumbnail>
+                    <img [src]="urlBanner">
+                </ion-thumbnail>
+                <ion-label>{{eventDay}}</ion-label>
+            </ion-item>
+        </ion-card>
         <ion-grid class="ion-text-center">
-            <ion-row>
-                <ion-col size="12">
-                    <ion-img [src]="urlBanner"></ion-img>
-                </ion-col>
-            </ion-row>
             <ion-row *ngIf="evento === 'warDay'">
                 <ion-col>
                     <ion-chip color="danger">
@@ -193,6 +199,6 @@
         </ion-list>
     </section>
 </ion-content>
-<ion-footer class="ion-no-border">
+<ion-footer class="ion-no-border" *ngIf="!otroClan">
     <ion-button expand="full" color="success" (click)="update()">Actualizar</ion-button>
 </ion-footer>

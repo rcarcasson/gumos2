@@ -14,6 +14,9 @@ export class NombatallaPipe implements PipeTransform {
       case 'clanWarCollectionDay':
         batalla = 'Batalla de Día de Colección';
         break;
+      case 'clanWarWarDay':
+        batalla = 'Batalla de Día de Guerra';
+        break;
       case 'casual2v2':
         batalla = 'Batalla 2v2';
         break;

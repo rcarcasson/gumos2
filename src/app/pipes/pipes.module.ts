@@ -6,18 +6,22 @@ import { ModlevelPipe } from './modlevel.pipe';
 import { WinlosePipe } from './winlose.pipe';
 import { ImgbatallaPipe } from './imgbatalla.pipe';
 import { NombatallaPipe } from './nombatalla.pipe';
+import { IsclanbadgePipe } from './isclanbadge.pipe';
+import { IsclannamePipe } from './isclanname.pipe';
 
 
 
 @NgModule({
-  declarations: [CofresPipe, GoldencardPipe, ModlevelPipe, WinlosePipe, ImgbatallaPipe, NombatallaPipe],
+  declarations: [CofresPipe, GoldencardPipe, ModlevelPipe, WinlosePipe, ImgbatallaPipe, NombatallaPipe, IsclanbadgePipe, IsclannamePipe],
   exports: [
     CofresPipe,
     GoldencardPipe,
     ModlevelPipe,
     WinlosePipe,
     ImgbatallaPipe,
-    NombatallaPipe
+    NombatallaPipe,
+    IsclanbadgePipe,
+    IsclannamePipe
   ],
   imports: [
     CommonModule

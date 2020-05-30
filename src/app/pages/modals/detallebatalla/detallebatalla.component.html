@@ -19,10 +19,10 @@
                 </h2>
                 <ion-chip color="light">
                     <ion-avatar>
-                        <img src="../../../assets/badges/{{battleInfo.team[0].clan.badgeId}}.png">
+                        <img [src]="battleInfo.team[0].clan | isclanbadge">
                     </ion-avatar>
                     <ion-label>
-                        {{battleInfo.team[0].clan.name}}
+                        {{battleInfo.team[0].clan | isclanname}}
                     </ion-label>
                 </ion-chip>
             </ion-label>
@@ -187,10 +187,10 @@
                 </h2>
                 <ion-chip color="light">
                     <ion-avatar>
-                        <img src="../../../assets/badges/{{battleInfo.opponent[0].clan.badgeId}}.png">
+                        <img [src]="battleInfo.opponent[0].clan | isclanbadge">
                     </ion-avatar>
                     <ion-label>
-                        {{battleInfo.opponent[0].clan.name}}
+                        {{battleInfo.opponent[0].clan | isclanname}}
                     </ion-label>
                 </ion-chip>
             </ion-label>

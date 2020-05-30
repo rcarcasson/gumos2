@@ -12,6 +12,9 @@ export class ImgbatallaPipe implements PipeTransform {
         img = 'battle-ladder.png';
         break;
       case 'clanWarCollectionDay':
+        img = 'cards.png';
+        break;
+      case 'clanWarWarDay':
         img = 'waricon.png';
         break;
       case 'casual2v2':
